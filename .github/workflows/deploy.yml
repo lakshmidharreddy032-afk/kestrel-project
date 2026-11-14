@@ -97,7 +97,7 @@ jobs:
           gcp_sa = os.environ.get('GCP_SA', '').strip()
 
           if sa_json:
-              # 1. Clean literal newlines inside private_key string literal
+              # 1. Clean literal newlines inside string literals so json.loads succeeds
               fixed = re.sub(
                   r'("private_key":\s*")(.*?)(")',
                   lambda m: m.group(1) + m.group(2).replace('\r', '').replace('\n', '\\n') + m.group(3),
@@ -107,9 +107,14 @@ jobs:
               try:
                   data = json.loads(fixed)
               except Exception:
-                  # Fallback: remove all bare carriage returns
                   fixed = sa_json.replace('\r', '')
                   data = json.loads(fixed)
+
+              # 2. Format PEM private key with strict headers and 64-character lines
+              pk = data.get('private_key', '')
+              clean_b64 = re.sub(r'-----BEGIN [A-Z ]+-----|-----END [A-Z ]+-----|\s+', '', pk)
+              lines = [clean_b64[i:i+64] for i in range(0, len(clean_b64), 64)]
+              data['private_key'] = "-----BEGIN PRIVATE KEY-----\n" + "\n".join(lines) + "\n-----END PRIVATE KEY-----\n"
 
               creds_file = os.path.expanduser('~/gcp-key.json')
               with open(creds_file, 'w') as f:
