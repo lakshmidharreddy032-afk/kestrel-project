@@ -30,11 +30,8 @@ jobs:
       - name: TypeScript Build & Lint Check
         run: npm run build
 
-      - name: Domain Rules Verification Battery (100% Gates)
+      - name: Vitest Integration & Domain Rules Battery
         run: npm test
-
-      - name: Vitest Integration Suite
-        run: npm run test:vitest
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -77,102 +74,145 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Check GCP Authentication Credentials
-        id: check
+      - name: Setup Python for Credential Sanitization
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Check and Sanitize GCP Credentials
+        id: gcp-auth
         env:
           SA_JSON: ${{ secrets.GCP_CREDENTIALS_JSON }}
           WIF_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           GCP_SA: ${{ secrets.GCP_SERVICE_ACCOUNT }}
         run: |
-          if [[ -n "$SA_JSON" ]]; then
-            echo "mode=json" >> "$GITHUB_OUTPUT"
-          elif [[ -n "$WIF_PROVIDER" && -n "$GCP_SA" ]]; then
-            echo "mode=wif" >> "$GITHUB_OUTPUT"
-          else
-            echo "mode=none" >> "$GITHUB_OUTPUT"
-            echo "::warning::GCP credentials secret missing. To enable automatic deployment to GCP Cloud Run, add GCP_CREDENTIALS_JSON in repository secrets: https://github.com/${{ github.repository }}/settings/secrets/actions"
-          fi
+          python3 - << 'EOF'
+          import os, re, json, sys
 
-      - id: auth-json
-        name: Authenticate with Service Account Key
-        if: steps.check.outputs.mode == 'json'
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS_JSON }}
+          sa_json = os.environ.get('SA_JSON', '').strip()
+          wif_provider = os.environ.get('WIF_PROVIDER', '').strip()
+          gcp_sa = os.environ.get('GCP_SA', '').strip()
 
-      - id: auth-wif
-        name: Authenticate with Workload Identity Federation
-        if: steps.check.outputs.mode == 'wif'
+          if sa_json:
+              # 1. Clean literal newlines inside private_key string literal
+              fixed = re.sub(
+                  r'("private_key":\s*")(.*?)(")',
+                  lambda m: m.group(1) + m.group(2).replace('\r', '').replace('\n', '\\n') + m.group(3),
+                  sa_json,
+                  flags=re.DOTALL
+              )
+              try:
+                  data = json.loads(fixed)
+              except Exception:
+                  # Fallback: remove all bare carriage returns
+                  fixed = sa_json.replace('\r', '')
+                  data = json.loads(fixed)
+
+              creds_file = os.path.expanduser('~/gcp-key.json')
+              with open(creds_file, 'w') as f:
+                  json.dump(data, f)
+
+              project_id = data.get('project_id', 'slabspro-slabsuser34')
+              client_email = data.get('client_email', '')
+
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+                  out.write("mode=json\n")
+                  out.write(f"project_id={project_id}\n")
+                  out.write(f"client_email={client_email}\n")
+                  out.write(f"creds_file={creds_file}\n")
+
+              print(f"✔ Successfully prepared key for project: {project_id} ({client_email})")
+
+          elif wif_provider and gcp_sa:
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+                  out.write("mode=wif\n")
+                  out.write("project_id=slabspro-slabsuser34\n")
+              print("✔ Configured for Workload Identity Federation")
+
+          else:
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+                  out.write("mode=none\n")
+              print("::warning::No GCP credentials found. Skipping Cloud Run deploy.")
+          EOF
+
+      - name: Authenticate with Service Account Key
+        if: steps.gcp-auth.outputs.mode == 'json'
+        run: |
+          gcloud auth activate-service-account --key-file="${{ steps.gcp-auth.outputs.creds_file }}"
+          gcloud config set project "${{ steps.gcp-auth.outputs.project_id }}"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=${{ steps.gcp-auth.outputs.creds_file }}" >> $GITHUB_ENV
+
+      - name: Authenticate with Workload Identity Federation
+        id: auth-wif
+        if: steps.gcp-auth.outputs.mode == 'wif'
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
-      - name: Resolve Active GCP Project ID
-        id: gcp
-        if: steps.check.outputs.mode != 'none'
-        run: |
-          PROJECT_ID="${{ steps.auth-json.outputs.project_id || steps.auth-wif.outputs.project_id }}"
-          if [[ -z "$PROJECT_ID" ]]; then
-            PROJECT_ID="slabspro-slabsuser34"
-          fi
-          echo "project_id=${PROJECT_ID}" >> "$GITHUB_OUTPUT"
-          echo "Deploying Kestrel Finance to GCP project: ${PROJECT_ID}"
-
-      - name: Setup Google Cloud SDK
-        if: steps.check.outputs.mode != 'none'
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          project_id: ${{ steps.gcp.outputs.project_id }}
-
       - name: Configure Docker for GCP Artifact Registry
-        if: steps.check.outputs.mode != 'none'
+        if: steps.gcp-auth.outputs.mode != 'none'
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
       - name: Ensure Artifact Registry Repository Exists
-        if: steps.check.outputs.mode != 'none'
+        if: steps.gcp-auth.outputs.mode != 'none'
         run: |
+          PROJECT_ID="${{ steps.gcp-auth.outputs.project_id || steps.auth-wif.outputs.project_id }}"
           gcloud artifacts repositories describe ${{ env.ARTIFACT_REPO }} \
-            --location=${{ env.REGION }} --project=${{ steps.gcp.outputs.project_id }} >/dev/null 2>&1 || \
+            --location=${{ env.REGION }} --project="$PROJECT_ID" >/dev/null 2>&1 || \
           gcloud artifacts repositories create ${{ env.ARTIFACT_REPO }} \
             --repository-format=docker --location=${{ env.REGION }} \
-            --project=${{ steps.gcp.outputs.project_id }} || \
-          echo "Using existing repository or permissions managed"
+            --project="$PROJECT_ID" || \
+          echo "Using existing repository"
 
       - name: Build and Push OCI Image to GCP Artifact Registry
-        if: steps.check.outputs.mode != 'none'
+        if: steps.gcp-auth.outputs.mode != 'none'
         run: |
-          IMAGE="${{ env.REGION }}-docker.pkg.dev/${{ steps.gcp.outputs.project_id }}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:${{ github.sha }}"
-          LATEST="${{ env.REGION }}-docker.pkg.dev/${{ steps.gcp.outputs.project_id }}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:latest"
+          PROJECT_ID="${{ steps.gcp-auth.outputs.project_id || steps.auth-wif.outputs.project_id }}"
+          IMAGE="${{ env.REGION }}-docker.pkg.dev/${PROJECT_ID}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:${{ github.sha }}"
+          LATEST="${{ env.REGION }}-docker.pkg.dev/${PROJECT_ID}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:latest"
           docker build -t "$IMAGE" -t "$LATEST" .
           docker push "$IMAGE"
           docker push "$LATEST"
 
       - name: Deploy to Google Cloud Run
-        id: deploy-cloudrun
-        if: steps.check.outputs.mode != 'none'
-        uses: google-github-actions/deploy-cloudrun@v2
-        with:
-          service: ${{ env.SERVICE_NAME }}
-          region: ${{ env.REGION }}
-          image: ${{ env.REGION }}-docker.pkg.dev/${{ steps.gcp.outputs.project_id }}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
-          flags: '--port=8080 --cpu=1 --memory=512Mi --min-instances=0 --max-instances=5'
-
-      - name: Enable Unauthenticated Public Ingress
-        if: steps.check.outputs.mode != 'none'
-        continue-on-error: true
+        if: steps.gcp-auth.outputs.mode != 'none'
+        id: deploy
         run: |
-          gcloud run services add-iam-policy-binding ${{ env.SERVICE_NAME }} \
-            --region=${{ env.REGION }} \
-            --member=allUsers \
-            --role=roles/run.invoker \
-            --project=${{ steps.gcp.outputs.project_id }}
+          PROJECT_ID="${{ steps.gcp-auth.outputs.project_id || steps.auth-wif.outputs.project_id }}"
+          IMAGE="${{ env.REGION }}-docker.pkg.dev/${PROJECT_ID}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:${{ github.sha }}"
+
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+            --image="$IMAGE" \
+            --region="${{ env.REGION }}" \
+            --project="$PROJECT_ID" \
+            --platform=managed \
+            --allow-unauthenticated \
+            --port=8080 \
+            --cpu=1 \
+            --memory=512Mi \
+            --min-instances=0 \
+            --max-instances=5
+
+          URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} \
+            --region="${{ env.REGION }}" \
+            --project="$PROJECT_ID" \
+            --format="value(status.url)")
+
+          echo "url=${URL}" >> $GITHUB_OUTPUT
+          echo "=========================================================="
+          echo "🚀 LIVE KESTREL FINANCE CLOUD RUN URL: ${URL}"
+          echo "=========================================================="
 
       - name: Output Deployment Summary
-        if: steps.check.outputs.mode != 'none'
+        if: steps.gcp-auth.outputs.mode != 'none'
         run: |
+          PROJECT_ID="${{ steps.gcp-auth.outputs.project_id || steps.auth-wif.outputs.project_id }}"
           echo "### 🚀 GCP Cloud Run Deployment Successful!" >> $GITHUB_STEP_SUMMARY
           echo "- **Service Name:** ${{ env.SERVICE_NAME }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Region:** ${{ env.REGION }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Project ID:** ${{ steps.gcp.outputs.project_id }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Live URL:** [${{ steps.deploy-cloudrun.outputs.url }}](${{ steps.deploy-cloudrun.outputs.url }})" >> $GITHUB_STEP_SUMMARY
+          echo "- **Project ID:** ${PROJECT_ID}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Live URL:** [${{ steps.deploy.outputs.url }}](${{ steps.deploy.outputs.url }})" >> $GITHUB_STEP_SUMMARY

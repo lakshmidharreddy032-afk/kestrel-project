@@ -1,4 +1,4 @@
-﻿# ========================================================
+# ========================================================
 # Kestrel Finance — Direct GCP Cloud Run Deploy (PowerShell)
 # Usage:
 #   .\scripts\deploy-cloudrun.ps1 -ProjectId "slabspro-slabsuser34"
