@@ -7,7 +7,7 @@ on:
 
 env:
   REGION: asia-south1
-  ARTIFACT_REPO: kestrel
+  ARTIFACT_REPO: northgate
   SERVICE_NAME: kestrel-finance
 
 jobs:
@@ -164,14 +164,14 @@ jobs:
 
       - name: Ensure Artifact Registry Repository Exists
         if: steps.gcp-auth.outputs.mode != 'none'
+        continue-on-error: true
         run: |
           PROJECT_ID="${{ steps.gcp-auth.outputs.project_id || steps.auth-wif.outputs.project_id }}"
           gcloud artifacts repositories describe ${{ env.ARTIFACT_REPO }} \
             --location=${{ env.REGION }} --project="$PROJECT_ID" >/dev/null 2>&1 || \
           gcloud artifacts repositories create ${{ env.ARTIFACT_REPO }} \
             --repository-format=docker --location=${{ env.REGION }} \
-            --project="$PROJECT_ID" || \
-          echo "Using existing repository"
+            --project="$PROJECT_ID" || true
 
       - name: Build and Push OCI Image to GCP Artifact Registry
         if: steps.gcp-auth.outputs.mode != 'none'
