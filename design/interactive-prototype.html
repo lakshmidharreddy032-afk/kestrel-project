@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kestrel Finance — Standalone Interactive Design Prototype</title>
+  <style>
+    :root {
+      --blue: #1e56a0;
+      --blue-hover: #163e75;
+      --blue-bg: #eaf1fb;
+      --blue-light: #f1f6fd;
+      --blue-border: #bcd5f6;
+      --bg: #f6f8fc;
+      --card: #ffffff;
+      --card-subtle: #f8fafd;
+      --ink: #0f172a;
+      --ink-secondary: #334155;
+      --mute: #64748b;
+      --line: #e2e8f0;
+      --line2: #cbd5e1;
+      --ok-bg: #e6f7ef;
+      --ok-ink: #0e6245;
+      --ok-border: #a3e6cb;
+      --warn-bg: #fef7e6;
+      --warn-ink: #8a5700;
+      --warn-border: #fde09e;
+      --error-bg: #fdf0f2;
+      --error-ink: #a52336;
+      --error-border: #f8b4be;
+      --purple-bg: #f3effe;
+      --purple-ink: #5534b8;
+      --purple-border: #d4c5fb;
+      --sans: "Inter", system-ui, -apple-system, sans-serif;
+      --mono: "JetBrains Mono", Consolas, monospace;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 14px -2px rgba(0,0,0,0.06);
+    }
+    [data-theme="dark"] {
+      --bg: #090e17;
+      --card: #111827;
+      --card-subtle: #162032;
+      --ink: #f8fafc;
+      --ink-secondary: #cbd5e1;
+      --mute: #94a3b8;
+      --line: #1e293b;
+      --line2: #334155;
+      --blue: #60a5fa;
+      --blue-bg: #132238;
+      --blue-light: #172844;
+      --blue-border: #1e3a5f;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.5; font-size: 13.5px; }
+    header { background: var(--card); border-bottom: 1px solid var(--line); padding: 12px 24px; position: sticky; top: 0; z-index: 100; }
+    .header-inner { max-width: 1440px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-icon { width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #173d74, #1e56a0); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 18px; }
+    .badge { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 9999px; }
+    .badge-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+    .badge-ok { background: var(--ok-bg); color: var(--ok-ink); border: 1px solid var(--ok-border); }
+    .badge-warn { background: var(--warn-bg); color: var(--warn-ink); border: 1px solid var(--warn-border); }
+    .badge-error { background: var(--error-bg); color: var(--error-ink); border: 1px solid var(--error-border); }
+    .stepper { background: var(--card); border-bottom: 1px solid var(--line); padding: 8px 24px; }
+    .stepper-inner { max-width: 1440px; margin: 0 auto; display: flex; gap: 4px; overflow-x: auto; align-items: center; }
+    .step-btn { padding: 6px 12px; border-radius: 6px; border: 1px solid transparent; background: transparent; font-size: 12px; font-weight: 600; color: var(--mute); cursor: pointer; white-space: nowrap; }
+    .step-btn.active { background: var(--blue-bg); color: var(--blue); border-color: var(--blue-border); }
+    main { max-width: 1440px; margin: 0 auto; padding: 24px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12.5px; }
+    th { padding: 10px 14px; background: var(--card-subtle); color: var(--mute); font-weight: 700; border-bottom: 1px solid var(--line); }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--line); }
+    .mono { font-family: var(--mono); }
+    .btn { padding: 8px 16px; border-radius: 8px; border: none; font-weight: 700; font-size: 12.5px; cursor: pointer; transition: all 0.15s; }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-outline { background: var(--card); border: 1px solid var(--line); color: var(--ink); }
+    .btn-ok { background: var(--ok-ink); color: #fff; }
+    .grid-2 { display: grid; grid-template-columns: minmax(460px, 1.3fr) minmax(360px, 1fr); gap: 20px; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+  <!-- App Header -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">K</div>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <strong style="font-size:16px;">Kestrel Finance</strong>
+            <span class="badge badge-blue">Interactive Design Prototype</span>
+          </div>
+          <span style="font-size:11px; color:var(--mute);">SME Credit Document Appraisal Workflow • Standalone Edition</span>
+        </div>
+      </div>
+
+      <!-- Role Switcher -->
+      <div style="display:flex; align-items:center; gap:8px; background:var(--card-subtle); padding:4px 8px; border-radius:8px; border:1px solid var(--line);">
+        <span style="font-size:11px; font-weight:700; color:var(--mute);">Persona:</span>
+        <button class="btn btn-outline" style="padding:4px 8px; font-size:11px;" id="btn-rm" onclick="setRole('RM')">RM (Vikram)</button>
+        <button class="btn btn-outline" style="padding:4px 8px; font-size:11px;" id="btn-analyst" onclick="setRole('Analyst')">Analyst (Meena)</button>
+        <button class="btn btn-primary" style="padding:4px 8px; font-size:11px;" id="btn-officer" onclick="setRole('Credit Officer')">Credit Officer (Arjun)</button>
+      </div>
+
+      <!-- Theme & Case -->
+      <div style="display:flex; align-items:center; gap:8px;">
+        <select style="padding:6px 10px; border-radius:6px; border:1px solid var(--line); font-size:12px; font-weight:600;" onchange="alert('Case switched to: ' + this.value)">
+          <option>APP-1001: Malabar Spices (₹18.0L)</option>
+          <option>APP-1002: Apex Engineering (₹22.0L)</option>
+          <option>APP-1004: Horizon Infra (₹45.0L) [OUT OF SCOPE]</option>
+        </select>
+        <button class="btn btn-outline" style="padding:6px 10px; font-size:12px;" onclick="toggleTheme()">🌙 Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stepper -->
+  <div class="stepper">
+    <div class="stepper-inner">
+      <button class="step-btn active" onclick="setScreen(1)">1. Intake Queue</button>
+      <span style="color:var(--mute);">➔</span>
+      <button class="step-btn" onclick="setScreen(2)">2. Day-1 Checklist</button>
+      <span style="color:var(--mute);">➔</span>
+      <button class="step-btn" onclick="setScreen(3)">3. Gap Diagnostics</button>
+      <span style="color:var(--mute);">➔</span>
+      <button class="step-btn" onclick="setScreen(4)">4. OCR Split-View</button>
+      <span style="color:var(--mute);">➔</span>
+      <button class="step-btn" onclick="setScreen(5)">5. Spreading Sheet</button>
+      <span style="color:var(--mute);">➔</span>
+      <button class="step-btn" onclick="setScreen(6)">6. Credit Sanction</button>
+      <span style="color:var(--mute);">➔</span>
+      <button class="step-btn" onclick="setScreen(7)">7. Audit Log</button>
+      <span style="color:var(--mute);">➔</span>
+      <button class="step-btn" onclick="setScreen(8)">8. Metrics &amp; NPA</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- Screen 1: Intake Queue -->
+    <div id="screen-1" class="tab-content active">
+      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; margin-bottom:20px;">
+        <div class="card" style="margin:0;"><span style="color:var(--mute); font-size:11.5px;">Queue Volume</span><div style="font-size:24px; font-weight:800;" class="mono">12 files</div></div>
+        <div class="card" style="margin:0;"><span style="color:var(--ok-ink); font-size:11.5px;">Eligible (&lt; ₹25L)</span><div style="font-size:24px; font-weight:800; color:var(--ok-ink);" class="mono">10 in policy</div></div>
+        <div class="card" style="margin:0;"><span style="color:var(--error-ink); font-size:11.5px;">Out of Scope (≥ ₹25L)</span><div style="font-size:24px; font-weight:800; color:var(--error-ink);" class="mono">2 blocked</div></div>
+        <div class="card" style="margin:0;"><span style="color:var(--blue); font-size:11.5px;">SLA Turnaround</span><div style="font-size:24px; font-weight:800; color:var(--blue);" class="mono">11.8 Days</div></div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:12px;">Active SME Applications Pipeline</h3>
+        <table>
+          <thead>
+            <tr><th>APP ID</th><th>BORROWER ENTITY</th><th>FACILITY LIMIT</th><th>AGE</th><th>STATUS</th><th>POLICY SCOPE</th><th>ACTION</th></tr>
+          </thead>
+          <tbody>
+            <tr style="background:var(--blue-light);">
+              <td class="mono" style="font-weight:700; color:var(--blue);">APP-1001</td>
+              <td><strong>Malabar Spices &amp; Agro LLP</strong></td>
+              <td class="mono font-bold">₹ 18,00,000</td>
+              <td>4d</td>
+              <td><span class="badge badge-warn">Checks Flagged</span></td>
+              <td><span class="badge badge-ok">✔ Eligible (&lt; ₹25L)</span></td>
+              <td><button class="btn btn-primary" style="padding:4px 10px; font-size:11px;" onclick="setScreen(2)">Open Case</button></td>
+            </tr>
+            <tr>
+              <td class="mono" style="font-weight:700; color:var(--blue);">APP-1002</td>
+              <td>Apex Precision Engineering Pvt Ltd</td>
+              <td class="mono">₹ 22,00,000</td>
+              <td>2d</td>
+              <td><span class="badge badge-blue">Documents Needed</span></td>
+              <td><span class="badge badge-ok">✔ Eligible (&lt; ₹25L)</span></td>
+              <td><button class="btn btn-outline" style="padding:4px 10px; font-size:11px;" onclick="setScreen(2)">Select</button></td>
+            </tr>
+            <tr style="background:#fef2f2;">
+              <td class="mono" style="font-weight:700; color:var(--error-ink);">APP-1004</td>
+              <td>Horizon Infra Developers</td>
+              <td class="mono font-bold" style="color:var(--error-ink);">₹ 45,00,000</td>
+              <td>1d</td>
+              <td><span class="badge badge-error">Out of Scope</span></td>
+              <td><span class="badge badge-error">⛔ Blocked (≥ ₹25L)</span></td>
+              <td><button class="btn btn-outline" style="padding:4px 10px; font-size:11px;" disabled>Blocked</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Screen 4: OCR Split-View -->
+    <div id="screen-4" class="tab-content">
+      <div class="card" style="background:#fef7e6; border-color:#fde09e; color:#8a5700; font-weight:700; padding:10px 16px;">
+        ⚠️ Mock extraction. Not a live model. No external AI APIs called. Figure verification mandatory by Credit Analyst.
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h4>Scanned Source Document Viewer (HDFC Bank Current Account)</h4>
+          <div style="background:#fff; border:1px solid #d1d5db; height:380px; border-radius:8px; margin-top:10px; padding:16px; position:relative;" class="mono">
+            <div style="border-bottom:2px solid #1e3a8a; padding-bottom:4px; margin-bottom:10px;">
+              <strong>HDFC BANK LIMITED — STATEMENT OF ACCOUNT</strong><br/>
+              <span style="font-size:10px; color:#6b7280;">Account: 50200084729104 | IFSC: HDFC0001092</span>
+            </div>
+            <div style="background:#f3f4f6; padding:8px; border-radius:4px; font-size:11px; margin-bottom:10px;">
+              Total Credits: ₹ 84,50,000 | Total Debits: ₹ 78,20,000
+            </div>
+            <!-- Bounding Box Highlights -->
+            <div style="position:absolute; top:88px; left:20px; width:180px; height:24px; border:2px solid #2563eb; background:rgba(37,99,235,0.1); border-radius:3px;">
+              <span style="background:#2563eb; color:#fff; font-size:9px; padding:1px 4px; border-radius:2px;">OCR 98.4%</span>
+            </div>
+            <p style="font-size:11px; line-height:1.8;">
+              02/05/26 NEFT Inward - Malabar Spices: ₹ 14,20,000 (Cr)<br/>
+              18/06/26 RTGS Inward - Bulk Agro: ₹ 22,00,000 (Cr)<br/>
+              31/10/26 Month End Calculated AMB: ₹ 4,85,000<br/>
+              31/10/26 Cheque Dishonours: 0 Returns
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h4>Extracted Structured Figures Table</h4>
+          <table style="margin-top:10px;">
+            <thead><tr><th>Metric</th><th>Extracted</th><th>Conf.</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr style="background:var(--blue-light);">
+                <td><strong>Total Operational Credits</strong></td>
+                <td class="mono font-bold">₹ 84,50,000</td>
+                <td>98%</td>
+                <td><span class="badge badge-ok">Confirmed</span></td>
+                <td><button class="btn btn-outline" style="padding:2px 6px; font-size:10px;">Checked ✔</button></td>
+              </tr>
+              <tr>
+                <td><strong>Average Monthly Balance</strong></td>
+                <td class="mono font-bold">₹ 4,85,000</td>
+                <td>97%</td>
+                <td><span class="badge badge-ok">Confirmed</span></td>
+                <td><button class="btn btn-outline" style="padding:2px 6px; font-size:10px;">Checked ✔</button></td>
+              </tr>
+              <tr>
+                <td><strong>GSTR-3B Annualized Turnover</strong></td>
+                <td class="mono font-bold">₹ 1,62,00,000</td>
+                <td>99%</td>
+                <td><span class="badge badge-ok">Confirmed</span></td>
+                <td><button class="btn btn-outline" style="padding:2px 6px; font-size:10px;">Checked ✔</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top:16px; text-align:right;">
+            <button class="btn btn-ok" onclick="setScreen(5)">Commit Figures to Spreading Sheet ➔</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 5: Spreading Sheet -->
+    <div id="screen-5" class="tab-content">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Financial Spreading Sheet Ratios</h3>
+          <table style="margin-top:12px;">
+            <thead><tr><th>Metric</th><th>Value</th><th>Benchmark</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>Debt Service Coverage Ratio (DSCR)</td><td class="mono font-bold" style="color:var(--blue);">1.82x</td><td>≥ 1.50x</td><td><span class="badge badge-ok">PASS</span></td></tr>
+              <tr><td>Interest Coverage Ratio (ICR)</td><td class="mono font-bold" style="color:var(--blue);">3.40x</td><td>≥ 2.00x</td><td><span class="badge badge-ok">PASS</span></td></tr>
+              <tr><td>Current Ratio</td><td class="mono font-bold" style="color:var(--blue);">1.42x</td><td>&gt; 1.25x</td><td><span class="badge badge-ok">PASS</span></td></tr>
+              <tr><td>Debt-to-Equity Ratio</td><td class="mono font-bold" style="color:var(--blue);">0.82x</td><td>&lt; 1.50x</td><td><span class="badge badge-ok">PASS</span></td></tr>
+              <tr><td>Banking vs GST Turnover Ratio</td><td class="mono font-bold" style="color:var(--blue);">1.04x</td><td>0.85x – 1.25x</td><td><span class="badge badge-ok">PASS</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>5-C Risk Scorecard (Fixed Baseline)</h3>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 0; background:var(--blue-light); padding:12px; border-radius:8px;">
+            <div>
+              <span style="font-size:11px; color:var(--mute);">Scorecard Score:</span>
+              <div style="font-size:26px; font-weight:800; color:var(--blue);" class="mono">68 / 100</div>
+            </div>
+            <div>
+              <span class="badge badge-blue" style="font-size:12px;">Tier B - Moderate Risk</span>
+            </div>
+          </div>
+          <p style="font-size:11.5px; color:var(--mute); line-height:1.4;">
+            🛡 <strong>Governance Rule:</strong> Extraction model is strictly an intake assistant. Credit scorecard model is existing and unchanged.
+          </p>
+          <div style="margin-top:16px;">
+            <button class="btn btn-primary" style="width:100%;" onclick="setScreen(6)">Proceed to Credit Officer Sign-Off ➔</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 6: Credit Sanction -->
+    <div id="screen-6" class="tab-content">
+      <div class="card">
+        <h3>Credit Officer Final Sign-Off Memo</h3>
+        <p style="color:var(--mute); font-size:12px; margin-bottom:14px;">Human sign-off mandatory. Arjun Iyer (Credit Officer) holds delegated lending authority.</p>
+        
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-bottom:16px;">
+          <div style="background:var(--card-subtle); padding:10px; border-radius:6px;"><span>Borrower:</span><br/><strong>Malabar Spices LLP</strong></div>
+          <div style="background:var(--card-subtle); padding:10px; border-radius:6px;"><span>Sanction Limit:</span><br/><strong class="mono" style="color:var(--blue);">₹ 18,00,000</strong></div>
+          <div style="background:var(--card-subtle); padding:10px; border-radius:6px;"><span>Interest Rate:</span><br/><strong class="mono">14.25% p.a.</strong></div>
+          <div style="background:var(--card-subtle); padding:10px; border-radius:6px;"><span>Collateral Coverage:</span><br/><strong style="color:var(--ok-ink);">1.32x Coverage</strong></div>
+        </div>
+
+        <label style="font-weight:700; font-size:12.5px; display:block; margin-bottom:6px;">Mandatory Underwriting Rationale (min 10 chars):</label>
+        <textarea id="rationale-text" rows="3" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--line); font-family:var(--sans); font-size:13px;" placeholder="Enter rationale...">Facility approved. DSCR 1.82x exceeds 1.35x benchmark with clean HDFC bank conduct.</textarea>
+        
+        <div style="display:flex; gap:10px; margin-top:16px;">
+          <button class="btn btn-ok" onclick="alert('✔ Sanction Executed! Generated Formal Sanction Letter Ref: KF/SME/2026/0842. Logged to immutable audit trail.'); setScreen(7);">✔ Sanction &amp; Approve Facility</button>
+          <button class="btn btn-outline" style="color:var(--warn-ink);" onclick="alert('Referred to credit committee.')">⚖️ Refer to Committee</button>
+          <button class="btn btn-outline" style="color:var(--error-ink);" onclick="alert('Application rejected.')">✕ Reject Application</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 7: Audit Log -->
+    <div id="screen-7" class="tab-content">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3>Immutable Compliance Audit Log</h3>
+          <div>
+            <button class="btn btn-outline" onclick="alert('Exported audit log CSV.')">📥 Export CSV</button>
+            <button class="btn btn-outline" onclick="alert('Exported audit log JSON.')">📋 Export JSON</button>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Event ID</th><th>Timestamp</th><th>Actor &amp; Role</th><th>Action Category</th><th>Mutation Details</th></tr></thead>
+          <tbody>
+            <tr><td class="mono font-bold" style="color:var(--blue);">EVT-809</td><td>2026-11-14 11:42</td><td>Arjun Iyer (Credit Officer)</td><td><span class="badge badge-ok">CREDIT_SIGNOFF</span></td><td>Facility sanctioned: Approved. DSCR 1.82x. Sanction Letter Ref: KF/SME/2026/0842.</td></tr>
+            <tr><td class="mono font-bold" style="color:var(--blue);">EVT-808</td><td>2026-11-14 11:38</td><td>Meena Sharma (Credit Analyst)</td><td><span class="badge badge-blue">SPREADING_SYNCED</span></td><td>100% figures verified. Synced to financial model.</td></tr>
+            <tr><td class="mono font-bold" style="color:var(--blue);">EVT-807</td><td>2026-11-14 11:35</td><td>Meena Sharma (Credit Analyst)</td><td><span class="badge" style="background:#f3effe; color:#5534b8;">FIGURE_OVERRIDDEN</span></td><td>Debits adjusted: ₹78.2L ➔ ₹75.0L. Reason: Inter-account contra entry excluded.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Screen 8: Metrics Dashboard -->
+    <div id="screen-8" class="tab-content">
+      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; margin-bottom:20px;">
+        <div class="card" style="margin:0;"><span style="color:var(--mute); font-size:11.5px;">TAT Efficiency</span><div style="font-size:24px; font-weight:800; color:var(--blue);" class="mono">11.8 Days</div><span style="color:var(--ok-ink); font-size:11px;">↓ 35% Faster</span></div>
+        <div class="card" style="margin:0;"><span style="color:var(--mute); font-size:11.5px;">Touch Time</span><div style="font-size:24px; font-weight:800; color:var(--blue);" class="mono">48 Min</div><span style="color:var(--ok-ink); font-size:11px;">↓ 82% Touch</span></div>
+        <div class="card" style="margin:0;"><span style="color:var(--mute); font-size:11.5px;">Checklist Completeness</span><div style="font-size:24px; font-weight:800; color:var(--blue);" class="mono">91%</div><span style="color:var(--ok-ink); font-size:11px;">↑ 29% First-Pass</span></div>
+        <div class="card" style="margin:0;"><span style="color:var(--mute); font-size:11.5px;">Portfolio Gross NPA</span><div style="font-size:24px; font-weight:800; color:var(--ok-ink);" class="mono">3.1%</div><span style="color:var(--ok-ink); font-size:11px;">Under 3.5% Limit</span></div>
+      </div>
+      <div class="card">
+        <h3>Gross NPA Risk Appetite Guardrail</h3>
+        <p style="color:var(--mute); font-size:12px; margin-bottom:12px;">Ensures faster decisioning never degrades credit underwriting standards.</p>
+        <div style="width:100%; height:12px; background:var(--line); border-radius:6px; overflow:hidden;">
+          <div style="width:88%; height:100%; background:linear-gradient(90deg, #10b981, #059669); border-radius:6px;"></div>
+        </div>
+        <div style="margin-top:8px; font-size:12px; color:var(--ok-ink); font-weight:600;">Current: 3.1% Gross NPA vs 3.5% Board Risk Ceiling (0.4% Safe Headroom)</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function setScreen(num) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.step-btn').forEach(el => el.classList.remove('active'));
+      const screen = document.getElementById('screen-' + num);
+      if (screen) screen.classList.add('active');
+      const btns = document.querySelectorAll('.step-btn');
+      if (btns[num - 1]) btns[num - 1].classList.add('active');
+    }
+    function setRole(role) {
+      alert('Active persona switched to: ' + role);
+    }
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    }
+  </script>
+</body>
+</html>

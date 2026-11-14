@@ -39,16 +39,20 @@ export interface BoundingBox {
 
 export interface ExtractedFigure {
   id: string;
-  docId: string;
-  sourceDoc: string;
+  docId?: string;
+  sourceDoc?: string;
+  documentRef?: string;
+  documentType?: string;
+  periodLabel?: string;
   sourcePage: number;
   label: string;
   fieldKey: string;
   extractedValue: number;
   confirmedValue: number | null;
-  unit: 'INR' | 'count' | 'ratio';
-  confidence: number;
-  status: 'Unchecked' | 'Confirmed' | 'Overridden';
+  unit: 'INR' | 'count' | 'ratio' | string;
+  confidence?: number;
+  confidenceScore?: number;
+  status: 'Unchecked' | 'Confirmed' | 'Overridden' | string;
   checkedBy?: string;
   checkedAt?: string;
   overrideReason?: string;

@@ -1,11 +1,149 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#f6f8fc" rx="16"/>
-  <rect x="24" y="24" width="752" height="60" fill="#ffffff" rx="12" stroke="#e2e8f0"/>
-  <text x="50" y="60" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#1e56a0">KESTREL FINANCE</text>
-  <text x="260" y="60" font-family="Inter, sans-serif" font-size="14" fill="#64748b">Screen 01: Applications List</text>
-  <rect x="24" y="108" width="752" height="368" fill="#ffffff" rx="12" stroke="#e2e8f0"/>
-  <text x="50" y="160" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#0f172a">Applications List</text>
-  <text x="50" y="195" font-family="Inter, sans-serif" font-size="13" fill="#64748b">12 SME Applications Queue (< ₹25L eligible, >= ₹25L blocked)</text>
-  <rect x="50" y="230" width="700" height="200" fill="#f8fafd" rx="8" stroke="#cbd5e1" stroke-dasharray="4"/>
-  <text x="400" y="335" font-family="Inter, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">[Mock Wireframe Design Export - Screen 01]</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#173d74"/>
+      <stop offset="100%" stop-color="#1e56a0"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafd"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#f6f8fc"/>
+
+  <!-- Top AppShell Header -->
+  <rect width="1200" height="64" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="24" y="14" width="36" height="36" rx="8" fill="url(#headerGrad)"/>
+  <text x="42" y="38" font-family="Inter, sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">K</text>
+  <text x="70" y="34" font-family="Inter, sans-serif" font-size="16" font-weight="800" fill="#0f172a">Kestrel Finance</text>
+  <text x="70" y="48" font-family="Inter, sans-serif" font-size="11" fill="#64748b">SME Credit Document Workflow • Production Prototype</text>
+  
+  <rect x="200" y="24" width="128" height="20" rx="10" fill="#eaf1fb" stroke="#bcd5f6"/>
+  <text x="264" y="38" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#1e56a0" text-anchor="middle">PROTOTYPE: MOCK DATA</text>
+
+  <!-- Role Switcher -->
+  <rect x="440" y="16" width="360" height="32" rx="8" fill="#f8fafd" stroke="#e2e8f0"/>
+  <circle cx="458" cy="32" r="12" fill="#1e56a0"/>
+  <text x="458" y="36" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#ffffff" text-anchor="middle">VM</text>
+  <text x="476" y="32" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#0f172a">Vikram (RM)</text>
+  <rect x="550" y="18" width="80" height="28" rx="6" fill="#ffffff" stroke="#bcd5f6"/>
+  <text x="590" y="36" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1e56a0" text-anchor="middle">RM</text>
+  <text x="660" y="36" font-family="Inter, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Analyst</text>
+  <text x="740" y="36" font-family="Inter, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Credit Officer</text>
+
+  <!-- Case Selector & Controls -->
+  <rect x="850" y="18" width="220" height="28" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="860" y="36" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#0f172a">APP-1001: Malabar Spices (₹18.0L)</text>
+  <rect x="1090" y="18" width="86" height="28" rx="6" fill="#f8fafd" stroke="#e2e8f0"/>
+  <text x="1133" y="36" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">🌙 Dark</text>
+
+  <!-- Workflow Stepper Sub-Header -->
+  <rect y="64" width="1200" height="42" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="24" y="72" width="140" height="26" rx="6" fill="#eaf1fb" stroke="#1e56a0"/>
+  <text x="94" y="89" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1e56a0" text-anchor="middle">1. Intake Queue [Active]</text>
+  <text x="180" y="89" font-family="Inter, sans-serif" font-size="11" fill="#64748b">➔ 2. Day-1 Checklist</text>
+  <text x="320" y="89" font-family="Inter, sans-serif" font-size="11" fill="#64748b">➔ 3. Gap Diagnostics</text>
+  <text x="470" y="89" font-family="Inter, sans-serif" font-size="11" fill="#64748b">➔ 4. OCR Split-View</text>
+  <text x="610" y="89" font-family="Inter, sans-serif" font-size="11" fill="#64748b">➔ 5. Spreading Sheet</text>
+  <text x="750" y="89" font-family="Inter, sans-serif" font-size="11" fill="#64748b">➔ 6. Credit Sanction</text>
+
+  <!-- Main Workspace Canvas -->
+  <g transform="translate(24, 120)">
+    <!-- KPI Overview Cards -->
+    <rect x="0" y="0" width="270" height="84" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    <text x="16" y="24" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#64748b">Active Queue Volume</text>
+    <text x="16" y="56" font-family="JetBrains Mono, monospace" font-size="24" font-weight="800" fill="#0f172a">12 <tspan font-size="13" font-weight="500" fill="#64748b">files</tspan></text>
+    <text x="16" y="74" font-family="Inter, sans-serif" font-size="10.5" fill="#64748b">SME Working Capital Pipeline</text>
+
+    <rect x="294" y="0" width="270" height="84" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    <text x="310" y="24" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#0e6245">Eligible (&lt; ₹25L Ceiling)</text>
+    <text x="310" y="56" font-family="JetBrains Mono, monospace" font-size="24" font-weight="800" fill="#0e6245">10 <tspan font-size="13" font-weight="500">in policy</tspan></text>
+    <text x="310" y="74" font-family="Inter, sans-serif" font-size="10.5" fill="#0e6245">Fast-track automated appraisal</text>
+
+    <rect x="588" y="0" width="270" height="84" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    <text x="604" y="24" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#a52336">Out of Scope (≥ ₹25L)</text>
+    <text x="604" y="56" font-family="JetBrains Mono, monospace" font-size="24" font-weight="800" fill="#a52336">2 <tspan font-size="13" font-weight="500">blocked</tspan></text>
+    <text x="604" y="74" font-family="Inter, sans-serif" font-size="10.5" fill="#a52336">Strict governance guardrail #1</text>
+
+    <rect x="882" y="0" width="270" height="84" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    <text x="898" y="24" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e56a0">Target Turnaround Time</text>
+    <text x="898" y="56" font-family="JetBrains Mono, monospace" font-size="24" font-weight="800" fill="#1e56a0">11.8d <tspan font-size="13" font-weight="500" fill="#64748b">vs 18.2d</tspan></text>
+    <text x="898" y="74" font-family="Inter, sans-serif" font-size="10.5" fill="#0e6245">↓ 35% TAT reduction vs manual</text>
+
+    <!-- Controls Bar -->
+    <text x="0" y="118" font-family="Inter, sans-serif" font-size="18" font-weight="800" fill="#0f172a">Applications Queue &amp; Pipeline</text>
+    <text x="0" y="136" font-family="Inter, sans-serif" font-size="12" fill="#64748b">Simple SME loan applications (&lt; ₹25 Lakh). Select any file to launch the S1/S3/S4 appraisal workflow.</text>
+
+    <rect x="760" y="104" width="200" height="32" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="772" y="125" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">🔍 Search by ID, applicant...</text>
+    <rect x="976" y="104" width="176" height="32" rx="6" fill="#1e56a0"/>
+    <text x="1064" y="125" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">+ Simulate New Case</text>
+
+    <!-- Data Table -->
+    <rect x="0" y="152" width="1152" height="490" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    
+    <!-- Table Header -->
+    <rect x="0" y="152" width="1152" height="38" rx="10 10 0 0" fill="#f8fafd" stroke="#e2e8f0"/>
+    <text x="20" y="176" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">APP ID</text>
+    <text x="120" y="176" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">APPLICANT ENTITY</text>
+    <text x="360" y="176" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">SECTOR</text>
+    <text x="520" y="176" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">FACILITY (₹)</text>
+    <text x="640" y="176" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">AGE / SLA</text>
+    <text x="750" y="176" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">STAGE STATUS</text>
+    <text x="910" y="176" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">CEILING SCOPE</text>
+    <text x="1080" y="176" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b" text-anchor="middle">ACTION</text>
+
+    <!-- Row 1: APP-1001 (Active) -->
+    <rect x="0" y="190" width="1152" height="48" fill="#f1f6fd"/>
+    <text x="20" y="220" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#1e56a0">APP-1001</text>
+    <text x="120" y="215" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#0f172a">Malabar Spices &amp; Agro LLP</text>
+    <text x="120" y="229" font-family="Inter, sans-serif" font-size="10.5" fill="#64748b">LLP • Working Capital Term Loan</text>
+    <text x="360" y="220" font-family="Inter, sans-serif" font-size="12" fill="#64748b">Agro-Processing</text>
+    <text x="520" y="220" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0f172a">₹ 18,00,000</text>
+    <text x="640" y="220" font-family="Inter, sans-serif" font-size="12" fill="#0f172a">4d (14d left)</text>
+    <rect x="750" y="204" width="120" height="22" rx="11" fill="#eaf1fb"/>
+    <text x="810" y="219" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#1e56a0" text-anchor="middle">Checks Flagged</text>
+    <rect x="910" y="204" width="110" height="22" rx="4" fill="#e6f7ef"/>
+    <text x="965" y="219" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#0e6245" text-anchor="middle">✔ Eligible (&lt; ₹25L)</text>
+    <rect x="1040" y="204" width="80" height="24" rx="4" fill="#1e56a0"/>
+    <text x="1080" y="220" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Active</text>
+
+    <!-- Row 2: APP-1002 -->
+    <rect x="0" y="238" width="1152" height="48" fill="#ffffff" stroke="#f1f5f9"/>
+    <text x="20" y="268" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#1e56a0">APP-1002</text>
+    <text x="120" y="263" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#0f172a">Apex Precision Engineering</text>
+    <text x="120" y="277" font-family="Inter, sans-serif" font-size="10.5" fill="#64748b">Private Limited • Expansion Loan</text>
+    <text x="360" y="268" font-family="Inter, sans-serif" font-size="12" fill="#64748b">Manufacturing</text>
+    <text x="520" y="268" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0f172a">₹ 22,00,000</text>
+    <text x="640" y="268" font-family="Inter, sans-serif" font-size="12" fill="#0f172a">2d (16d left)</text>
+    <rect x="750" y="252" width="120" height="22" rx="11" fill="#fef7e6"/>
+    <text x="810" y="267" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#8a5700" text-anchor="middle">Documents Needed</text>
+    <rect x="910" y="252" width="110" height="22" rx="4" fill="#e6f7ef"/>
+    <text x="965" y="267" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#0e6245" text-anchor="middle">✔ Eligible (&lt; ₹25L)</text>
+    <rect x="1040" y="252" width="80" height="24" rx="4" fill="#ffffff" stroke="#1e56a0"/>
+    <text x="1080" y="268" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#1e56a0" text-anchor="middle">Open Case</text>
+
+    <!-- Row 3: APP-1004 (Out of scope) -->
+    <rect x="0" y="286" width="1152" height="48" fill="#fdf0f2"/>
+    <text x="20" y="316" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#a52336">APP-1004</text>
+    <text x="120" y="311" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#0f172a">Horizon Infra Developers</text>
+    <text x="120" y="325" font-family="Inter, sans-serif" font-size="10.5" fill="#a52336">Private Limited • Exceeds ₹25L Policy Limit</text>
+    <text x="360" y="316" font-family="Inter, sans-serif" font-size="12" fill="#64748b">Infrastructure</text>
+    <text x="520" y="316" font-family="JetBrains Mono, monospace" font-size="12" font-weight="800" fill="#a52336">₹ 45,00,000</text>
+    <text x="640" y="316" font-family="Inter, sans-serif" font-size="12" fill="#a52336">1d (Blocked)</text>
+    <rect x="750" y="300" width="120" height="22" rx="11" fill="#fdf0f2"/>
+    <text x="810" y="315" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#a52336" text-anchor="middle">Out of Scope</text>
+    <rect x="910" y="300" width="110" height="22" rx="4" fill="#fdf0f2"/>
+    <text x="965" y="315" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#a52336" text-anchor="middle">⛔ Blocked (≥ ₹25L)</text>
+    <rect x="1040" y="300" width="80" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="1080" y="316" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#94a3b8" text-anchor="middle">Blocked</text>
+
+    <!-- Footer info -->
+    <text x="20" y="620" font-family="Inter, sans-serif" font-size="12" fill="#64748b">Showing 12 SME loan applications • Filtered: All active files • Enforcing ₹25 Lakh ticket size boundary</text>
+  </g>
 </svg>

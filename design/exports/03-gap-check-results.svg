@@ -1,11 +1,106 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#f6f8fc" rx="16"/>
-  <rect x="24" y="24" width="752" height="60" fill="#ffffff" rx="12" stroke="#e2e8f0"/>
-  <text x="50" y="60" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#1e56a0">KESTREL FINANCE</text>
-  <text x="260" y="60" font-family="Inter, sans-serif" font-size="14" fill="#64748b">Screen 03: Gap Check Results (S3)</text>
-  <rect x="24" y="108" width="752" height="368" fill="#ffffff" rx="12" stroke="#e2e8f0"/>
-  <text x="50" y="160" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#0f172a">Gap Check Results (S3)</text>
-  <text x="50" y="195" font-family="Inter, sans-serif" font-size="13" fill="#64748b">Missing docs, duplicate hashes, period coverage</text>
-  <rect x="50" y="230" width="700" height="200" fill="#f8fafd" rx="8" stroke="#cbd5e1" stroke-dasharray="4"/>
-  <text x="400" y="335" font-family="Inter, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">[Mock Wireframe Design Export - Screen 03]</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#173d74"/>
+      <stop offset="100%" stop-color="#1e56a0"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="#f6f8fc"/>
+
+  <!-- Header -->
+  <rect width="1200" height="64" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="24" y="14" width="36" height="36" rx="8" fill="url(#headerGrad)"/>
+  <text x="42" y="38" font-family="Inter, sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">K</text>
+  <text x="70" y="34" font-family="Inter, sans-serif" font-size="16" font-weight="800" fill="#0f172a">Kestrel Finance</text>
+  <text x="70" y="48" font-family="Inter, sans-serif" font-size="11" fill="#64748b">SME Credit Document Workflow • Production Prototype</text>
+  <rect x="200" y="24" width="128" height="20" rx="10" fill="#eaf1fb" stroke="#bcd5f6"/>
+  <text x="264" y="38" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#1e56a0" text-anchor="middle">PROTOTYPE: MOCK DATA</text>
+
+  <!-- Stepper -->
+  <rect y="64" width="1200" height="42" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="24" y="89" font-family="Inter, sans-serif" font-size="11" fill="#64748b">1. Intake Queue ➔ 2. Day-1 Checklist ➔</text>
+  <rect x="250" y="72" width="160" height="26" rx="6" fill="#eaf1fb" stroke="#1e56a0"/>
+  <text x="330" y="89" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1e56a0" text-anchor="middle">3. Gap Diagnostics [Active]</text>
+  <text x="420" y="89" font-family="Inter, sans-serif" font-size="11" fill="#64748b">➔ 4. OCR Split-View ➔ 5. Spreading Sheet ➔ 6. Credit Sanction</text>
+
+  <g transform="translate(24, 130)">
+    <text x="0" y="20" font-family="Inter, sans-serif" font-size="18" font-weight="800" fill="#0f172a">Automated Document Gap Diagnostics (Solution S3)</text>
+    <text x="0" y="38" font-family="Inter, sans-serif" font-size="12.5" fill="#64748b">Deterministic cross-validation heuristics detecting statement continuity breaks, duplicate files, and turnover mismatches.</text>
+
+    <rect x="960" y="10" width="192" height="34" rx="8" fill="#1e56a0"/>
+    <text x="1056" y="32" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">⚡ Re-run Diagnostic Engine</text>
+
+    <!-- Cross-Reconciliation Summary Card -->
+    <rect x="0" y="60" width="1152" height="110" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    
+    <g transform="translate(24, 80)">
+      <text x="0" y="16" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#64748b">GSTR-3B Taxable Turnover</text>
+      <text x="0" y="44" font-family="JetBrains Mono, monospace" font-size="20" font-weight="800" fill="#0f172a">₹ 1,62,00,000</text>
+      <text x="0" y="62" font-family="Inter, sans-serif" font-size="10.5" fill="#64748b">Table 3.1 Outward supplies</text>
+
+      <text x="260" y="16" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#64748b">Annualized Bank Credits</text>
+      <text x="260" y="44" font-family="JetBrains Mono, monospace" font-size="20" font-weight="800" fill="#0f172a">₹ 1,69,00,000</text>
+      <text x="260" y="62" font-family="Inter, sans-serif" font-size="10.5" fill="#64748b">6M operational credits × 2</text>
+
+      <text x="520" y="16" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#64748b">GST vs Banking Reconciliation</text>
+      <text x="520" y="44" font-family="JetBrains Mono, monospace" font-size="20" font-weight="800" fill="#0e6245">+4.32%</text>
+      <rect x="620" y="28" width="90" height="20" rx="4" fill="#e6f7ef"/>
+      <text x="665" y="42" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0e6245" text-anchor="middle">PASSED (&lt; 15%)</text>
+      <text x="520" y="62" font-family="Inter, sans-serif" font-size="10.5" fill="#0e6245">Variance within policy appetite</text>
+
+      <text x="800" y="16" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#64748b">Statement Period Continuity (6 Months)</text>
+      <g transform="translate(800, 30)">
+        <rect x="0" y="0" width="40" height="20" rx="4" fill="#e6f7ef" stroke="#a3e6cb"/>
+        <text x="20" y="14" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#0e6245" text-anchor="middle">May ✓</text>
+        <rect x="46" y="0" width="40" height="20" rx="4" fill="#e6f7ef" stroke="#a3e6cb"/>
+        <text x="66" y="14" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#0e6245" text-anchor="middle">Jun ✓</text>
+        <rect x="92" y="0" width="40" height="20" rx="4" fill="#e6f7ef" stroke="#a3e6cb"/>
+        <text x="112" y="14" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#0e6245" text-anchor="middle">Jul ✓</text>
+        <rect x="138" y="0" width="40" height="20" rx="4" fill="#e6f7ef" stroke="#a3e6cb"/>
+        <text x="158" y="14" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#0e6245" text-anchor="middle">Aug ✓</text>
+        <rect x="184" y="0" width="40" height="20" rx="4" fill="#e6f7ef" stroke="#a3e6cb"/>
+        <text x="204" y="14" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#0e6245" text-anchor="middle">Sep ✓</text>
+        <rect x="230" y="0" width="40" height="20" rx="4" fill="#e6f7ef" stroke="#a3e6cb"/>
+        <text x="250" y="14" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" fill="#0e6245" text-anchor="middle">Oct ✓</text>
+      </g>
+      <text x="800" y="62" font-family="Inter, sans-serif" font-size="10.5" fill="#0e6245">Zero missing monthly statement gaps</text>
+    </g>
+
+    <!-- Diagnostic Rule Cards Grid -->
+    <g transform="translate(0, 190)">
+      <!-- Card 1 -->
+      <rect x="0" y="0" width="368" height="180" rx="10" fill="#ffffff" stroke="#a3e6cb" filter="url(#shadow)"/>
+      <text x="16" y="28" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#64748b">GAP-201</text>
+      <rect x="280" y="14" width="72" height="20" rx="4" fill="#e6f7ef"/>
+      <text x="316" y="28" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0e6245" text-anchor="middle">PASSED</text>
+      <text x="16" y="56" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#0e6245">Duplicate Page &amp; Hash Check</text>
+      <text x="16" y="80" font-family="Inter, sans-serif" font-size="12" fill="#334155">Zero SHA-256 identical transaction hash collisions detected across uploaded bank statements.</text>
+      <line x1="16" y1="130" x2="352" y2="130" stroke="#f1f5f9"/>
+      <text x="16" y="152" font-family="Inter, sans-serif" font-size="11" fill="#64748b"><strong>Prescribed Action:</strong> No action required.</text>
+
+      <!-- Card 2 -->
+      <rect x="392" y="0" width="368" height="180" rx="10" fill="#ffffff" stroke="#fde09e" filter="url(#shadow)"/>
+      <text x="408" y="28" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#64748b">GAP-102</text>
+      <rect x="672" y="14" width="72" height="20" rx="4" fill="#fef7e6"/>
+      <text x="708" y="28" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#8a5700" text-anchor="middle">WARNING</text>
+      <text x="408" y="56" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#8a5700">Missing Partnership Deed</text>
+      <text x="408" y="80" font-family="Inter, sans-serif" font-size="12" fill="#334155">Mandatory constitutional proof is missing from intake packet for LLP constitution.</text>
+      <line x1="408" y1="130" x2="744" y2="130" stroke="#f1f5f9"/>
+      <text x="408" y="152" font-family="Inter, sans-serif" font-size="11" fill="#64748b"><strong>Prescribed Action:</strong> Deficiency notice dispatched via WhatsApp.</text>
+
+      <!-- Card 3 -->
+      <rect x="784" y="0" width="368" height="180" rx="10" fill="#ffffff" stroke="#a3e6cb" filter="url(#shadow)"/>
+      <text x="800" y="28" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#64748b">GAP-205</text>
+      <rect x="1064" y="14" width="72" height="20" rx="4" fill="#e6f7ef"/>
+      <text x="1100" y="28" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0e6245" text-anchor="middle">PASSED</text>
+      <text x="800" y="56" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#0e6245">Financial Year Validity Check</text>
+      <text x="800" y="80" font-family="Inter, sans-serif" font-size="12" fill="#334155">Filings correspond to active assessment year FY 2025-26. No expired financial filings.</text>
+      <line x1="800" y1="130" x2="1136" y2="130" stroke="#f1f5f9"/>
+      <text x="800" y="152" font-family="Inter, sans-serif" font-size="11" fill="#64748b"><strong>Prescribed Action:</strong> In order for financial spreading.</text>
+    </g>
+  </g>
 </svg>

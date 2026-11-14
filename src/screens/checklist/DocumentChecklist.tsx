@@ -113,6 +113,8 @@ export const DocumentChecklist: React.FC<DocumentChecklistProps> = ({
             setShowPreview(false);
           }}
           canSend={isRM}
+          applicantName={application.applicant}
+          applicationId={application.id}
         />
       )}
     </div>

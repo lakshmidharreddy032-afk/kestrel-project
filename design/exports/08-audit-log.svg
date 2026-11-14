@@ -1,11 +1,100 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#f6f8fc" rx="16"/>
-  <rect x="24" y="24" width="752" height="60" fill="#ffffff" rx="12" stroke="#e2e8f0"/>
-  <text x="50" y="60" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#1e56a0">KESTREL FINANCE</text>
-  <text x="260" y="60" font-family="Inter, sans-serif" font-size="14" fill="#64748b">Screen 08: Immutable Audit Log</text>
-  <rect x="24" y="108" width="752" height="368" fill="#ffffff" rx="12" stroke="#e2e8f0"/>
-  <text x="50" y="160" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#0f172a">Immutable Audit Log</text>
-  <text x="50" y="195" font-family="Inter, sans-serif" font-size="13" fill="#64748b">Complete chronological event history</text>
-  <rect x="50" y="230" width="700" height="200" fill="#f8fafd" rx="8" stroke="#cbd5e1" stroke-dasharray="4"/>
-  <text x="400" y="335" font-family="Inter, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">[Mock Wireframe Design Export - Screen 08]</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#173d74"/>
+      <stop offset="100%" stop-color="#1e56a0"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="#f6f8fc"/>
+
+  <!-- Top Header -->
+  <rect width="1200" height="64" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="24" y="14" width="36" height="36" rx="8" fill="url(#headerGrad)"/>
+  <text x="42" y="38" font-family="Inter, sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">K</text>
+  <text x="70" y="34" font-family="Inter, sans-serif" font-size="16" font-weight="800" fill="#0f172a">Kestrel Finance</text>
+  <text x="70" y="48" font-family="Inter, sans-serif" font-size="11" fill="#64748b">SME Credit Document Workflow • Production Prototype</text>
+
+  <!-- Stepper -->
+  <rect y="64" width="1200" height="42" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="24" y="89" font-family="Inter, sans-serif" font-size="11" fill="#64748b">1. Intake ➔ 2. Checklist ➔ 3. Gap Diagnostics ➔ 4. OCR ➔ 5. Analyst Gate ➔ 6. Spreading ➔ 7. Sanction ➔</text>
+  <rect x="760" y="72" width="170" height="26" rx="6" fill="#eaf1fb" stroke="#1e56a0"/>
+  <text x="845" y="89" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1e56a0" text-anchor="middle">8. Audit Log [Active]</text>
+
+  <g transform="translate(24, 126)">
+    <text x="0" y="24" font-family="Inter, sans-serif" font-size="18" font-weight="800" fill="#0f172a">Immutable Compliance Audit Log (SOC 2 / RBI Audit-Ready)</text>
+    <text x="0" y="44" font-family="Inter, sans-serif" font-size="12.5" fill="#64748b">Chronological, tamper-evident record of all extractions, figure checks, analyst overrides, and credit sanctions.</text>
+
+    <!-- Controls -->
+    <rect x="730" y="14" width="180" height="32" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="742" y="34" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">🔍 Search audit trail...</text>
+    <rect x="920" y="14" width="105" height="32" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="972" y="34" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#0f172a" text-anchor="middle">📥 Export CSV</text>
+    <rect x="1035" y="14" width="117" height="32" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="1093" y="34" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#0f172a" text-anchor="middle">📋 Export JSON</text>
+
+    <!-- Audit Log Table -->
+    <rect x="0" y="62" width="1152" height="570" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    <rect x="0" y="62" width="1152" height="38" rx="10 10 0 0" fill="#f8fafd" stroke="#e2e8f0"/>
+    <text x="16" y="86" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">EVENT ID</text>
+    <text x="140" y="86" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">TIMESTAMP (IST)</text>
+    <text x="300" y="86" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">ACTOR &amp; ROLE</text>
+    <text x="490" y="86" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">ACTION CATEGORY</text>
+    <text x="690" y="86" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">FILE</text>
+    <text x="770" y="86" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">MUTATION DETAILS &amp; AUDIT DIFF</text>
+    <text x="1060" y="86" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#64748b">MODEL</text>
+
+    <!-- Event 1: Sanction -->
+    <rect x="0" y="100" width="1152" height="52" fill="#ffffff" stroke="#f1f5f9"/>
+    <text x="16" y="131" font-family="JetBrains Mono, monospace" font-size="11.5" font-weight="700" fill="#1e56a0">EVT-809</text>
+    <text x="140" y="131" font-family="Inter, sans-serif" font-size="11.5" fill="#64748b">2026-11-14 11:42:09</text>
+    <text x="300" y="124" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Arjun Iyer</text>
+    <text x="300" y="138" font-family="Inter, sans-serif" font-size="10" fill="#64748b">Credit Officer</text>
+    <rect x="490" y="115" width="130" height="22" rx="4" fill="#e6f7ef"/>
+    <text x="555" y="130" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#0e6245" text-anchor="middle">CREDIT_SIGNOFF</text>
+    <text x="690" y="131" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="#0f172a">APP-1001</text>
+    <text x="770" y="124" font-family="Inter, sans-serif" font-size="11" fill="#0f172a">Facility sanctioned: Approved. DSCR 1.82x exceeds benchmark.</text>
+    <text x="770" y="138" font-family="Inter, sans-serif" font-size="10" fill="#64748b">Sanction Letter: KF/SME/2026/0842 generated</text>
+    <text x="1060" y="131" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#64748b">v1.2-pilot</text>
+
+    <!-- Event 2: Spreading Sync -->
+    <rect x="0" y="152" width="1152" height="52" fill="#ffffff" stroke="#f1f5f9"/>
+    <text x="16" y="183" font-family="JetBrains Mono, monospace" font-size="11.5" font-weight="700" fill="#1e56a0">EVT-808</text>
+    <text x="140" y="183" font-family="Inter, sans-serif" font-size="11.5" fill="#64748b">2026-11-14 11:38:42</text>
+    <text x="300" y="176" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Meena Sharma</text>
+    <text x="300" y="190" font-family="Inter, sans-serif" font-size="10" fill="#64748b">Credit Analyst</text>
+    <rect x="490" y="167" width="130" height="22" rx="4" fill="#eaf1fb"/>
+    <text x="555" y="182" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#1e56a0" text-anchor="middle">SPREADING_SYNCED</text>
+    <text x="690" y="183" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="#0f172a">APP-1001</text>
+    <text x="770" y="183" font-family="Inter, sans-serif" font-size="11" fill="#0f172a">100% figures verified. Committed to spreading model &amp; 5-C scorecard.</text>
+    <text x="1060" y="183" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#64748b">v1.2-pilot</text>
+
+    <!-- Event 3: Analyst Override -->
+    <rect x="0" y="204" width="1152" height="52" fill="#fbfaff" stroke="#f1f5f9"/>
+    <text x="16" y="235" font-family="JetBrains Mono, monospace" font-size="11.5" font-weight="700" fill="#1e56a0">EVT-807</text>
+    <text x="140" y="235" font-family="Inter, sans-serif" font-size="11.5" fill="#64748b">2026-11-14 11:35:10</text>
+    <text x="300" y="228" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Meena Sharma</text>
+    <text x="300" y="242" font-family="Inter, sans-serif" font-size="10" fill="#64748b">Credit Analyst</text>
+    <rect x="490" y="219" width="130" height="22" rx="4" fill="#f3effe"/>
+    <text x="555" y="234" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#5534b8" text-anchor="middle">FIGURE_OVERRIDDEN</text>
+    <text x="690" y="235" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="#0f172a">APP-1001</text>
+    <text x="770" y="228" font-family="Inter, sans-serif" font-size="11" fill="#0f172a">total_debits overridden from ₹78,20,000 to ₹75,00,000 (-4.1%)</text>
+    <text x="770" y="242" font-family="Inter, sans-serif" font-size="10" fill="#5534b8">Reason: Excluded internal transfer contra entry; verified on page 1</text>
+    <text x="1060" y="235" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#64748b">v1.2-pilot</text>
+
+    <!-- Event 4: Consolidated Request -->
+    <rect x="0" y="256" width="1152" height="52" fill="#ffffff" stroke="#f1f5f9"/>
+    <text x="16" y="287" font-family="JetBrains Mono, monospace" font-size="11.5" font-weight="700" fill="#1e56a0">EVT-806</text>
+    <text x="140" y="287" font-family="Inter, sans-serif" font-size="11.5" fill="#64748b">2026-11-14 10:14:22</text>
+    <text x="300" y="280" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Vikram Malhotra</text>
+    <text x="300" y="294" font-family="Inter, sans-serif" font-size="10" fill="#64748b">Relationship Manager</text>
+    <rect x="490" y="271" width="130" height="22" rx="4" fill="#eaf1fb"/>
+    <text x="555" y="286" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#1e56a0" text-anchor="middle">REQUEST_DISPATCHED</text>
+    <text x="690" y="287" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="#0f172a">APP-1001</text>
+    <text x="770" y="287" font-family="Inter, sans-serif" font-size="11" fill="#0f172a">Consolidated deficiency notice dispatched via WhatsApp &amp; Email (Round 1).</text>
+    <text x="1060" y="287" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#64748b">v1.2-pilot</text>
+  </g>
 </svg>

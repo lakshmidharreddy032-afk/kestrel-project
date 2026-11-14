@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  kestrel-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kestrel-finance/credit-workflow:1.0.0
+    container_name: kestrel-workflow-prod
+    restart: unless-stopped
+    ports:
+      - "3000:8080"
+    environment:
+      - NODE_ENV=production
+      - VITE_APP_ENV=production
+      - VITE_CEILING_TICKET_SIZE=2500000
+      - VITE_NBFC_REG_NO=B-14.02941
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    security_opt:
+      - no-new-privileges:true
+    read_only: false
+    tmpfs:
+      - /tmp
+      - /var/run
+    networks:
+      - kestrel-network
+
+networks:
+  kestrel-network:
+    driver: bridge

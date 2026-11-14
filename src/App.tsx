@@ -11,10 +11,12 @@ import { AuditLogTable } from './screens/auditLog/AuditLogTable';
 import { MetricsDashboard } from './screens/dashboard/MetricsDashboard';
 import { ROLES } from './roles/roles';
 import { SCREENS } from './components/layout/Sidebar';
+import { ToastProvider, useToast } from './components/ui/Toast';
 
-export const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const [state, setState] = useState(store.getState());
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const { showToast } = useToast();
 
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
@@ -49,12 +51,18 @@ export const App: React.FC = () => {
   return (
     <AppShell
       currentRole={state.currentRole}
-      onRoleChange={role => store.setRole(role)}
+      onRoleChange={role => {
+        store.setRole(role);
+        showToast('info', 'Active Persona Switched', `Now operating as ${role}`);
+      }}
       currentScreen={state.currentScreen}
       onScreenChange={screen => store.setScreen(screen)}
       applications={state.applications}
       activeCaseId={state.activeCaseId}
-      onCaseChange={caseId => store.setActiveCase(caseId)}
+      onCaseChange={caseId => {
+        store.setActiveCase(caseId);
+        showToast('info', 'Active Case Switched', `Loaded file: ${caseId}`);
+      }}
       theme={theme}
       onToggleTheme={toggleTheme}
     >
@@ -65,6 +73,7 @@ export const App: React.FC = () => {
           onSelectCase={caseId => {
             store.setActiveCase(caseId);
             store.setScreen('checklist');
+            showToast('info', 'Case Selected', `Switched to Day-1 Checklist for ${caseId}`);
           }}
         />
       )}
@@ -80,9 +89,9 @@ export const App: React.FC = () => {
               missing.status = 'Received';
               missing.fileName = `${missing.type}_verified.pdf`;
               store.save();
-              alert(`Simulated upload for: ${missing.title}`);
+              showToast('success', 'Document Received & Verified', `${missing.title} uploaded successfully.`);
             } else {
-              alert('All documents are already uploaded.');
+              showToast('info', 'Intake Complete', 'All required documents have already been uploaded.');
             }
           }}
           onSendConsolidatedRequest={() => {
@@ -96,7 +105,7 @@ export const App: React.FC = () => {
               `Consolidated request generated for ${activeApp.applicant}. Total rounds: ${activeApp.requestSentCount}.`
             );
             store.save();
-            alert('Consolidated request logged to audit trail.');
+            showToast('success', 'Deficiency Notice Dispatched', `Round ${activeApp.requestSentCount} request logged to audit trail.`);
           }}
         />
       )}
@@ -108,30 +117,18 @@ export const App: React.FC = () => {
         />
       )}
 
-      {state.currentScreen === 'extraction' && (
+      {(state.currentScreen === 'extraction' || state.currentScreen === 'analyst') && (
         <ExtractionReview
           application={activeApp}
           figures={activeFigures}
           currentRole={state.currentRole}
           onConfirmFigure={figId => {
             store.confirmFigure(figId, ROLES[state.currentRole].name);
+            showToast('success', 'Figure Confirmed', 'Verified against document bounding box.');
           }}
           onOverrideFigure={(figId, val, reason) => {
             store.overrideFigure(figId, val, reason, ROLES[state.currentRole].name);
-          }}
-        />
-      )}
-
-      {state.currentScreen === 'analyst' && (
-        <ExtractionReview
-          application={activeApp}
-          figures={activeFigures}
-          currentRole={state.currentRole}
-          onConfirmFigure={figId => {
-            store.confirmFigure(figId, ROLES[state.currentRole].name);
-          }}
-          onOverrideFigure={(figId, val, reason) => {
-            store.overrideFigure(figId, val, reason, ROLES[state.currentRole].name);
+            showToast('warning', 'Figure Overridden', `Adjusted to ₹${val.toLocaleString('en-IN')}. Rationale logged.`);
           }}
         />
       )}
@@ -149,7 +146,7 @@ export const App: React.FC = () => {
           currentRole={state.currentRole}
           onRecordSignOff={(decision, notes) => {
             store.recordSignOff(decision, notes, ROLES[state.currentRole].name);
-            alert(`Decision recorded: ${decision}`);
+            showToast(decision === 'Approved' ? 'success' : decision === 'Rejected' ? 'error' : 'warning', `Credit Decision: ${decision}`, `Signed off by ${ROLES[state.currentRole].name}`);
           }}
         />
       )}
@@ -164,10 +161,18 @@ export const App: React.FC = () => {
         <MetricsDashboard
           onResetDemoData={() => {
             store.reset();
-            alert('Demo data reset to initial seed values.');
+            showToast('info', 'Demo Data Reset', 'Restored initial mock seed data.');
           }}
         />
       )}
     </AppShell>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <ToastProvider>
+      <AppContent />
+    </ToastProvider>
   );
 };

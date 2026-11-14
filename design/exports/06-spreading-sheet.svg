@@ -1,11 +1,129 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#f6f8fc" rx="16"/>
-  <rect x="24" y="24" width="752" height="60" fill="#ffffff" rx="12" stroke="#e2e8f0"/>
-  <text x="50" y="60" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#1e56a0">KESTREL FINANCE</text>
-  <text x="260" y="60" font-family="Inter, sans-serif" font-size="14" fill="#64748b">Screen 06: Spreading Sheet & Scorecard</text>
-  <rect x="24" y="108" width="752" height="368" fill="#ffffff" rx="12" stroke="#e2e8f0"/>
-  <text x="50" y="160" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#0f172a">Spreading Sheet & Scorecard</text>
-  <text x="50" y="195" font-family="Inter, sans-serif" font-size="13" fill="#64748b">Calculated ratios & read-only legacy scorecard</text>
-  <rect x="50" y="230" width="700" height="200" fill="#f8fafd" rx="8" stroke="#cbd5e1" stroke-dasharray="4"/>
-  <text x="400" y="335" font-family="Inter, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">[Mock Wireframe Design Export - Screen 06]</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#173d74"/>
+      <stop offset="100%" stop-color="#1e56a0"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="#f6f8fc"/>
+
+  <!-- Top Header -->
+  <rect width="1200" height="64" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="24" y="14" width="36" height="36" rx="8" fill="url(#headerGrad)"/>
+  <text x="42" y="38" font-family="Inter, sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">K</text>
+  <text x="70" y="34" font-family="Inter, sans-serif" font-size="16" font-weight="800" fill="#0f172a">Kestrel Finance</text>
+  <text x="70" y="48" font-family="Inter, sans-serif" font-size="11" fill="#64748b">SME Credit Document Workflow • Production Prototype</text>
+
+  <!-- Stepper -->
+  <rect y="64" width="1200" height="42" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="24" y="89" font-family="Inter, sans-serif" font-size="11" fill="#64748b">1. Intake ➔ 2. Checklist ➔ 3. Gap Diagnostics ➔ 4. OCR ➔ 5. Analyst Gate ➔</text>
+  <rect x="520" y="72" width="180" height="26" rx="6" fill="#eaf1fb" stroke="#1e56a0"/>
+  <text x="610" y="89" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#1e56a0" text-anchor="middle">6. Spreading &amp; Scorecard [Active]</text>
+  <text x="710" y="89" font-family="Inter, sans-serif" font-size="11" fill="#64748b">➔ 7. Credit Sanction</text>
+
+  <g transform="translate(24, 126)">
+    <text x="0" y="24" font-family="Inter, sans-serif" font-size="18" font-weight="800" fill="#0f172a">Financial Spreading Sheet &amp; 5-C Risk Scorecard (Solution S5)</text>
+    <text x="0" y="44" font-family="Inter, sans-serif" font-size="12.5" fill="#64748b">Pre-filled spreading model for Malabar Spices &amp; Agro LLP from 100% verified analyst figures.</text>
+
+    <!-- Stress Testing Sensitivity Bar -->
+    <rect x="0" y="60" width="1152" height="52" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    <text x="20" y="91" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172a">⚡ Stress Test Simulator: Revenue Shock Sensitivity (0% Baseline)</text>
+    <rect x="560" y="80" width="400" height="8" rx="4" fill="#e2e8f0"/>
+    <circle cx="760" cy="84" r="9" fill="#1e56a0"/>
+    <text x="980" y="90" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#1e56a0">DSCR: 1.82x</text>
+
+    <!-- Left Column: Core Financial Ratios Table -->
+    <rect x="0" y="128" width="720" height="480" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    <rect x="0" y="128" width="720" height="38" rx="10 10 0 0" fill="#f8fafd" stroke="#e2e8f0"/>
+    <text x="16" y="152" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#64748b">FINANCIAL RATIO / METRIC</text>
+    <text x="280" y="152" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#64748b">CALCULATED VALUE</text>
+    <text x="440" y="152" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#64748b">BENCHMARK POLICY</text>
+    <text x="640" y="152" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" fill="#64748b" text-anchor="middle">STATUS</text>
+
+    <!-- Ratio 1 -->
+    <rect x="0" y="166" width="720" height="44" fill="#ffffff" stroke="#f1f5f9"/>
+    <text x="16" y="193" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Debt Service Coverage Ratio (DSCR)</text>
+    <text x="280" y="193" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#1e56a0">1.82x</text>
+    <text x="440" y="193" font-family="Inter, sans-serif" font-size="11.5" fill="#64748b">≥ 1.50x target policy</text>
+    <rect x="615" y="178" width="50" height="20" rx="4" fill="#e6f7ef"/>
+    <text x="640" y="192" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0e6245" text-anchor="middle">PASS</text>
+
+    <!-- Ratio 2 -->
+    <rect x="0" y="210" width="720" height="44" fill="#ffffff" stroke="#f1f5f9"/>
+    <text x="16" y="237" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Interest Coverage Ratio (ICR)</text>
+    <text x="280" y="237" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#1e56a0">3.40x</text>
+    <text x="440" y="237" font-family="Inter, sans-serif" font-size="11.5" fill="#64748b">≥ 2.00x target policy</text>
+    <rect x="615" y="222" width="50" height="20" rx="4" fill="#e6f7ef"/>
+    <text x="640" y="236" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0e6245" text-anchor="middle">PASS</text>
+
+    <!-- Ratio 3 -->
+    <rect x="0" y="254" width="720" height="44" fill="#ffffff" stroke="#f1f5f9"/>
+    <text x="16" y="281" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Current Ratio (Working Capital)</text>
+    <text x="280" y="281" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#1e56a0">1.42x</text>
+    <text x="440" y="281" font-family="Inter, sans-serif" font-size="11.5" fill="#64748b">&gt; 1.25x target policy</text>
+    <rect x="615" y="266" width="50" height="20" rx="4" fill="#e6f7ef"/>
+    <text x="640" y="280" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0e6245" text-anchor="middle">PASS</text>
+
+    <!-- Ratio 4 -->
+    <rect x="0" y="298" width="720" height="44" fill="#ffffff" stroke="#f1f5f9"/>
+    <text x="16" y="325" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Debt-to-Equity Ratio</text>
+    <text x="280" y="325" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#1e56a0">0.82x</text>
+    <text x="440" y="325" font-family="Inter, sans-serif" font-size="11.5" fill="#64748b">&lt; 1.50x benchmark</text>
+    <rect x="615" y="310" width="50" height="20" rx="4" fill="#e6f7ef"/>
+    <text x="640" y="324" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0e6245" text-anchor="middle">PASS</text>
+
+    <!-- Ratio 5 -->
+    <rect x="0" y="342" width="720" height="44" fill="#ffffff" stroke="#f1f5f9"/>
+    <text x="16" y="369" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Net Profit Margin (PAT %)</text>
+    <text x="280" y="369" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#1e56a0">6.8%</text>
+    <text x="440" y="369" font-family="Inter, sans-serif" font-size="11.5" fill="#64748b">≥ 5.0% target</text>
+    <rect x="615" y="354" width="50" height="20" rx="4" fill="#e6f7ef"/>
+    <text x="640" y="368" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0e6245" text-anchor="middle">PASS</text>
+
+    <!-- Right Column: 5-C Scorecard Panel -->
+    <rect x="744" y="128" width="408" height="480" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+    <rect x="744" y="128" width="408" height="40" rx="10 10 0 0" fill="#f8fafd" stroke="#e2e8f0"/>
+    <text x="760" y="152" font-family="Inter, sans-serif" font-size="13" font-weight="800" fill="#0f172a">5-C Risk Scorecard (Fixed Baseline)</text>
+
+    <g transform="translate(760, 184)">
+      <!-- Score Summary -->
+      <rect x="0" y="0" width="376" height="74" rx="8" fill="#f1f6fd" stroke="#bcd5f6"/>
+      <text x="16" y="24" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#1e56a0">Composite Risk Score</text>
+      <text x="16" y="56" font-family="JetBrains Mono, monospace" font-size="28" font-weight="800" fill="#1e56a0">68 <tspan font-size="14" font-weight="500" fill="#64748b">/ 100</tspan></text>
+      <text x="240" y="38" font-family="Inter, sans-serif" font-size="14" font-weight="800" fill="#0f172a">Tier B</text>
+      <text x="240" y="54" font-family="Inter, sans-serif" font-size="11" fill="#64748b">Moderate Risk</text>
+
+      <!-- 5-C Dimensions -->
+      <text x="0" y="104" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Scorecard Dimension Breakdown:</text>
+
+      <text x="0" y="130" font-family="Inter, sans-serif" font-size="11" fill="#334155">Character (Promoter KYC, CIBIL 740)</text>
+      <text x="340" y="130" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#0f172a">18/20</text>
+      <rect x="0" y="136" width="376" height="5" rx="2.5" fill="#e2e8f0"/>
+      <rect x="0" y="136" width="338" height="5" rx="2.5" fill="#1e56a0"/>
+
+      <text x="0" y="162" font-family="Inter, sans-serif" font-size="11" fill="#334155">Capacity (DSCR 1.82x, Monthly Accruals)</text>
+      <text x="340" y="162" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#0f172a">22/25</text>
+      <rect x="0" y="168" width="376" height="5" rx="2.5" fill="#e2e8f0"/>
+      <rect x="0" y="168" width="330" height="5" rx="2.5" fill="#1e56a0"/>
+
+      <text x="0" y="194" font-family="Inter, sans-serif" font-size="11" fill="#334155">Capital (Net Worth ₹68L, Debt/Equity)</text>
+      <text x="340" y="194" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#0f172a">14/20</text>
+      <rect x="0" y="200" width="376" height="5" rx="2.5" fill="#e2e8f0"/>
+      <rect x="0" y="200" width="263" height="5" rx="2.5" fill="#1e56a0"/>
+
+      <text x="0" y="226" font-family="Inter, sans-serif" font-size="11" fill="#334155">Collateral (Hypothecation of Book Debts)</text>
+      <text x="340" y="226" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#0f172a">10/15</text>
+      <rect x="0" y="232" width="376" height="5" rx="2.5" fill="#e2e8f0"/>
+      <rect x="0" y="232" width="250" height="5" rx="2.5" fill="#1e56a0"/>
+
+      <!-- Governance Notice -->
+      <rect x="0" y="260" width="376" height="50" rx="6" fill="#f8fafc" stroke="#bcd5f6"/>
+      <text x="12" y="280" font-family="Inter, sans-serif" font-size="10.5" fill="#334155">🛡 <strong>Scorecard model is existing and unchanged.</strong></text>
+      <text x="12" y="296" font-family="Inter, sans-serif" font-size="10" fill="#64748b">Extraction tools assist with figure intake only. Risk score is untouched.</text>
+    </g>
+  </g>
 </svg>

@@ -6,7 +6,7 @@ import extractionsData from '../data/extractions.json';
  * Clearly labeled: "Mock extraction, no model call."
  */
 export function getMockExtractions(applicationId: string): ExtractedFigure[] {
-  const data = (extractionsData as Record<string, ExtractedFigure[]>)[applicationId];
+  const data = (extractionsData as unknown as Record<string, ExtractedFigure[]>)[applicationId];
   if (!data) return [];
   return JSON.parse(JSON.stringify(data));
 }

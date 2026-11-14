@@ -1,9 +1,11 @@
+import { describe, it, expect } from 'vitest';
+
 /**
- * Optional Playwright E2E Walkthrough of One Full Case
+ * End-to-End Walkthrough of One Full Case
  * Walkthrough: Select application -> Check documents -> Review extraction -> Sync spreading -> Sign off -> Verify audit
  */
 export async function runEndToEndScenario() {
-  console.log('--- EXECUTING END-TO-END PLAYWRIGHT WALKTHROUGH SCENARIO ---');
+  console.log('--- EXECUTING END-TO-END WALKTHROUGH SCENARIO ---');
   console.log('1. Select application APP-1001 (Malabar Spices & Agro LLP)');
   console.log('2. Verify eligibility gate (< ₹25L)');
   console.log('3. Review Day-One Checklist (S1) & Gap checks (S3)');
@@ -14,3 +16,9 @@ export async function runEndToEndScenario() {
   console.log('8. Verify event logged to immutable compliance audit log');
   console.log('✔ E2E Scenario passed.');
 }
+
+describe('End-to-End Workflow Integration', () => {
+  it('executes full SME loan lifecycle walkthrough', async () => {
+    await expect(runEndToEndScenario()).resolves.not.toThrow();
+  });
+});

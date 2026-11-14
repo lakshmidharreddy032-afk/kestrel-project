@@ -20,17 +20,27 @@ export const SplitView: React.FC<SplitViewProps> = ({
   canEdit = false
 }) => {
   const [docType, setDocType] = useState<'bank' | 'gst'>('bank');
+  const [zoom, setZoom] = useState<number>(100);
+  const [showBoxes, setShowBoxes] = useState<boolean>(true);
+  const [tableFilter, setTableFilter] = useState<'all' | 'unchecked' | 'verified'>('all');
+
   const pageNumber = docType === 'bank' ? 1 : 2;
   const pageFigures = figures.filter(f => f.sourcePage === pageNumber);
 
+  const filteredFigures = figures.filter(f => {
+    if (tableFilter === 'unchecked') return f.status === 'Unchecked';
+    if (tableFilter === 'verified') return f.status === 'Confirmed' || f.status === 'Overridden';
+    return true;
+  });
+
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(420px, 1.2fr) minmax(360px, 1fr)', gap: '20px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(460px, 1.25fr) minmax(380px, 1fr)', gap: '20px' }}>
       
       {/* Left Pane: Rendered Mock Statement with Interactive Bounding Boxes */}
-      <div style={{ background: 'var(--card)', borderRadius: '12px', border: '1px solid var(--line)', padding: '16px', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+      <div style={{ background: 'var(--card)', borderRadius: '12px', border: '1px solid var(--line)', padding: '16px', display: 'flex', flexDirection: 'column', boxShadow: 'var(--shadow-xs)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
           <div>
-            <h4 style={{ fontSize: '14px', fontWeight: 700 }}>
+            <h4 style={{ fontSize: '14px', fontWeight: 800 }}>
               {docType === 'bank' ? 'HDFC Bank Current Account Statement' : 'Government of India — GST Return (GSTR-3B)'}
             </h4>
             <span style={{ fontSize: '11px', color: 'var(--mute)' }}>
@@ -38,42 +48,79 @@ export const SplitView: React.FC<SplitViewProps> = ({
             </span>
           </div>
 
-          <div style={{ display: 'flex', gap: '6px' }}>
+          {/* Document & Zoom Controls */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ display: 'flex', background: 'var(--card-subtle)', borderRadius: '6px', border: '1px solid var(--line)', padding: '2px' }}>
+              <button
+                type="button"
+                onClick={() => setDocType('bank')}
+                style={{
+                  padding: '4px 8px', fontSize: '11px', fontWeight: docType === 'bank' ? 700 : 500, borderRadius: '4px',
+                  border: 'none', background: docType === 'bank' ? 'var(--blue)' : 'transparent',
+                  color: docType === 'bank' ? '#fff' : 'var(--ink)', cursor: 'pointer'
+                }}
+              >
+                Bank Statement
+              </button>
+              <button
+                type="button"
+                onClick={() => setDocType('gst')}
+                style={{
+                  padding: '4px 8px', fontSize: '11px', fontWeight: docType === 'gst' ? 700 : 500, borderRadius: '4px',
+                  border: 'none', background: docType === 'gst' ? 'var(--blue)' : 'transparent',
+                  color: docType === 'gst' ? '#fff' : 'var(--ink)', cursor: 'pointer'
+                }}
+              >
+                GSTR-3B
+              </button>
+            </div>
+
+            {/* Zoom Buttons */}
+            <div style={{ display: 'flex', gap: '2px' }}>
+              <button
+                type="button"
+                title="Zoom Out"
+                onClick={() => setZoom(z => Math.max(80, z - 10))}
+                style={{ padding: '3px 7px', fontSize: '11px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--card)', cursor: 'pointer' }}
+              >
+                -
+              </button>
+              <span style={{ fontSize: '11px', fontFamily: 'var(--mono)', padding: '3px 4px', color: 'var(--mute)' }}>{zoom}%</span>
+              <button
+                type="button"
+                title="Zoom In"
+                onClick={() => setZoom(z => Math.min(130, z + 10))}
+                style={{ padding: '3px 7px', fontSize: '11px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--card)', cursor: 'pointer' }}
+              >
+                +
+              </button>
+            </div>
+
             <button
               type="button"
-              onClick={() => setDocType('bank')}
+              onClick={() => setShowBoxes(!showBoxes)}
               style={{
-                padding: '4px 10px', fontSize: '11.5px', fontWeight: docType === 'bank' ? 700 : 500, borderRadius: '6px',
-                border: '1px solid var(--line)', background: docType === 'bank' ? 'var(--blue-bg)' : 'var(--card)',
-                color: docType === 'bank' ? 'var(--blue)' : 'var(--ink)'
+                padding: '4px 8px', fontSize: '11px', fontWeight: 600, borderRadius: '6px',
+                border: '1px solid var(--line)', background: showBoxes ? 'var(--ok-bg)' : 'var(--card)',
+                color: showBoxes ? 'var(--ok-ink)' : 'var(--mute)', cursor: 'pointer'
               }}
             >
-              Bank Statement
-            </button>
-            <button
-              type="button"
-              onClick={() => setDocType('gst')}
-              style={{
-                padding: '4px 10px', fontSize: '11.5px', fontWeight: docType === 'gst' ? 700 : 500, borderRadius: '6px',
-                border: '1px solid var(--line)', background: docType === 'gst' ? 'var(--blue-bg)' : 'var(--card)',
-                color: docType === 'gst' ? 'var(--blue)' : 'var(--ink)'
-              }}
-            >
-              GSTR-3B Return
+              {showBoxes ? 'Boxes: ON' : 'Boxes: OFF'}
             </button>
           </div>
         </div>
 
         {/* Document Rendering Surface */}
         <div style={{
-          position: 'relative', width: '100%', height: '480px', background: '#fdfdfd', border: '1px solid #d1d5db',
-          borderRadius: '8px', padding: '16px', fontFamily: 'var(--mono)', fontSize: '11.5px', color: '#1f2937', overflow: 'hidden'
+          position: 'relative', width: '100%', height: '500px', background: '#fdfdfd', border: '1px solid #d1d5db',
+          borderRadius: '8px', padding: '16px', fontFamily: 'var(--mono)', fontSize: '11.5px', color: '#1f2937', overflow: 'auto',
+          transform: `scale(${zoom / 100})`, transformOrigin: 'top left', transition: 'transform 0.15s ease'
         }}>
           {docType === 'bank' ? (
             <div>
               <div style={{ borderBottom: '2px solid #1e3a8a', paddingBottom: '6px', marginBottom: '10px' }}>
                 <strong style={{ fontSize: '13px', color: '#1e3a8a' }}>HDFC BANK LIMITED — CURRENT ACCOUNT STATEMENT</strong><br/>
-                <span>Account: 50200084729104 | IFSC: HDFC0001092 | Branch: Industrial Area, Hyderabad</span>
+                <span style={{ fontSize: '10.5px', color: '#4b5563' }}>Account: 50200084729104 | IFSC: HDFC0001092 | Branch: Industrial Area, Hyderabad</span>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', background: '#f3f4f6', padding: '8px', borderRadius: '4px', marginBottom: '12px' }}>
                 <div><strong>Period:</strong> 01/05/2026 to 31/10/2026</div>
@@ -105,7 +152,7 @@ export const SplitView: React.FC<SplitViewProps> = ({
             <div>
               <div style={{ borderBottom: '2px solid #065f46', paddingBottom: '6px', marginBottom: '10px' }}>
                 <strong style={{ fontSize: '13px', color: '#065f46' }}>FORM GSTR-3B — GOVERNMENT OF INDIA</strong><br/>
-                <span>GSTIN: 36AAACM8492Q1ZT | Legal Name: Malabar Spices & Agro LLP</span>
+                <span style={{ fontSize: '10.5px', color: '#4b5563' }}>GSTIN: 36AAACM8492Q1ZT | Legal Name: Malabar Spices & Agro LLP</span>
               </div>
               <div style={{ background: '#ecfdf5', padding: '8px', borderRadius: '4px', marginBottom: '12px' }}>
                 <strong>Table 3.1: Details of Outward Supplies & Inward Supplies Liable to Reverse Charge</strong>
@@ -138,42 +185,85 @@ export const SplitView: React.FC<SplitViewProps> = ({
           )}
 
           {/* Interactive Bounding Box Highlights Layer */}
-          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'auto' }}>
-            {pageFigures.map(fig => (
-              <SourceHighlight
-                key={fig.id}
-                figure={fig}
-                isSelected={fig.id === selectedFigureId}
-                onSelect={onSelectFigure}
-              />
-            ))}
-          </div>
+          {showBoxes && (
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'auto' }}>
+              {pageFigures.map(fig => (
+                <SourceHighlight
+                  key={fig.id}
+                  figure={fig}
+                  isSelected={fig.id === selectedFigureId}
+                  onSelect={onSelectFigure}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
       {/* Right Pane: Extracted Figure Table */}
-      <div style={{ background: 'var(--card)', borderRadius: '12px', border: '1px solid var(--line)', padding: '16px', display: 'flex', flexDirection: 'column' }}>
-        <h4 style={{ fontSize: '14px', fontWeight: 700, marginBottom: '4px' }}>Extracted Figures Table</h4>
-        <p style={{ fontSize: '12px', color: 'var(--mute)', marginBottom: '12px' }}>
-          Click any figure to cross-reference coordinates on the source document.
-        </p>
+      <div style={{ background: 'var(--card)', borderRadius: '12px', border: '1px solid var(--line)', padding: '16px', display: 'flex', flexDirection: 'column', boxShadow: 'var(--shadow-xs)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <div>
+            <h4 style={{ fontSize: '14px', fontWeight: 800 }}>Extracted Figures Table</h4>
+            <p style={{ fontSize: '11.5px', color: 'var(--mute)' }}>
+              Cross-reference coordinates on source document.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', gap: '4px', background: 'var(--card-subtle)', padding: '2px', borderRadius: '6px', border: '1px solid var(--line)' }}>
+            <button
+              type="button"
+              onClick={() => setTableFilter('all')}
+              style={{
+                padding: '3px 8px', fontSize: '10.5px', borderRadius: '4px', border: 'none',
+                background: tableFilter === 'all' ? 'var(--blue)' : 'transparent',
+                color: tableFilter === 'all' ? '#fff' : 'var(--ink)', cursor: 'pointer', fontWeight: 600
+              }}
+            >
+              All ({figures.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setTableFilter('unchecked')}
+              style={{
+                padding: '3px 8px', fontSize: '10.5px', borderRadius: '4px', border: 'none',
+                background: tableFilter === 'unchecked' ? 'var(--warn-ink)' : 'transparent',
+                color: tableFilter === 'unchecked' ? '#fff' : 'var(--ink)', cursor: 'pointer', fontWeight: 600
+              }}
+            >
+              Unchecked ({figures.filter(f => f.status === 'Unchecked').length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setTableFilter('verified')}
+              style={{
+                padding: '3px 8px', fontSize: '10.5px', borderRadius: '4px', border: 'none',
+                background: tableFilter === 'verified' ? 'var(--ok-ink)' : 'transparent',
+                color: tableFilter === 'verified' ? '#fff' : 'var(--ink)', cursor: 'pointer', fontWeight: 600
+              }}
+            >
+              Verified ({figures.filter(f => f.status !== 'Unchecked').length})
+            </button>
+          </div>
+        </div>
 
         <div style={{ overflowX: 'auto', flex: 1 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid var(--line)', textAlign: 'left', color: 'var(--mute)' }}>
                 <th style={{ padding: '8px' }}>Metric</th>
-                <th style={{ padding: '8px', textAlign: 'right' }}>Extracted</th>
-                <th style={{ padding: '8px' }}>Confidence</th>
+                <th style={{ padding: '8px', textAlign: 'right' }}>Value</th>
+                <th style={{ padding: '8px' }}>Conf.</th>
                 <th style={{ padding: '8px' }}>Status</th>
-                {canEdit && <th style={{ padding: '8px', textAlign: 'center' }}>Action</th>}
+                {canEdit && <th style={{ padding: '8px', textAlign: 'center' }}>Analyst Action</th>}
               </tr>
             </thead>
             <tbody>
-              {figures.map(fig => {
+              {filteredFigures.map(fig => {
                 const isSelected = fig.id === selectedFigureId;
                 const statusColor = fig.status === 'Confirmed' ? 'var(--ok-ink)' : fig.status === 'Overridden' ? 'var(--purple-ink)' : 'var(--warn-ink)';
                 const statusBg = fig.status === 'Confirmed' ? 'var(--ok-bg)' : fig.status === 'Overridden' ? 'var(--purple-bg)' : 'var(--warn-bg)';
+                const confScore = fig.confidence ?? fig.confidenceScore ?? 0.95;
 
                 return (
                   <tr
@@ -186,19 +276,19 @@ export const SplitView: React.FC<SplitViewProps> = ({
                       borderBottom: '1px solid var(--line)',
                       cursor: 'pointer',
                       background: isSelected ? 'var(--blue-light)' : 'transparent',
-                      transition: 'background 0.15s'
+                      transition: 'background 0.15s ease'
                     }}
                   >
                     <td style={{ padding: '8px' }}>
                       <div style={{ fontWeight: 600 }}>{fig.label}</div>
-                      <div style={{ fontSize: '10.5px', color: 'var(--mute)' }}>Page {fig.sourcePage}</div>
+                      <div style={{ fontSize: '10px', color: 'var(--mute)' }}>Page {fig.sourcePage} • {fig.fieldKey}</div>
                     </td>
                     <td style={{ padding: '8px', textAlign: 'right', fontFamily: 'var(--mono)', fontWeight: 700 }}>
                       ₹{fig.confirmedValue !== null ? fig.confirmedValue.toLocaleString('en-IN') : fig.extractedValue.toLocaleString('en-IN')}
                     </td>
                     <td style={{ padding: '8px' }}>
                       <span style={{ fontSize: '11px', fontFamily: 'var(--mono)', color: 'var(--mute)' }}>
-                        {(fig.confidence * 100).toFixed(0)}%
+                        {(confScore * 100).toFixed(0)}%
                       </span>
                     </td>
                     <td style={{ padding: '8px' }}>
@@ -211,17 +301,19 @@ export const SplitView: React.FC<SplitViewProps> = ({
                         <div style={{ display: 'flex', gap: '4px', justifyContent: 'center' }}>
                           <button
                             type="button"
+                            title="Confirm Extracted Figure"
                             onClick={(e) => { e.stopPropagation(); onConfirmFigure?.(fig.id); }}
-                            style={{ padding: '3px 7px', fontSize: '11px', borderRadius: '4px', border: '1px solid var(--ok-border)', background: 'var(--ok-bg)', color: 'var(--ok-ink)', cursor: 'pointer' }}
+                            style={{ padding: '3px 8px', fontSize: '11px', borderRadius: '4px', border: '1px solid var(--ok-border)', background: 'var(--ok-bg)', color: 'var(--ok-ink)', cursor: 'pointer', fontWeight: 700 }}
                           >
-                            ✔
+                            ✔ Accept
                           </button>
                           <button
                             type="button"
+                            title="Override Figure with Justification"
                             onClick={(e) => { e.stopPropagation(); onOpenOverride?.(fig); }}
-                            style={{ padding: '3px 7px', fontSize: '11px', borderRadius: '4px', border: '1px solid var(--purple-border)', background: 'var(--purple-bg)', color: 'var(--purple-ink)', cursor: 'pointer' }}
+                            style={{ padding: '3px 8px', fontSize: '11px', borderRadius: '4px', border: '1px solid var(--purple-border)', background: 'var(--purple-bg)', color: 'var(--purple-ink)', cursor: 'pointer', fontWeight: 700 }}
                           >
-                            ✎
+                            ✎ Edit
                           </button>
                         </div>
                       </td>

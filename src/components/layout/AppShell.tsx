@@ -2,6 +2,7 @@ import React from 'react';
 import type { UserRole, SMEApplication } from '../../domain/types';
 import { RoleSwitcher } from '../../roles/RoleSwitcher';
 import { Sidebar } from './Sidebar';
+import { WorkflowStepper } from './WorkflowStepper';
 
 interface AppShellProps {
   currentRole: UserRole;
@@ -101,6 +102,40 @@ export const AppShell: React.FC<AppShellProps> = ({
 
       {/* Navigation Bar */}
       <Sidebar currentScreen={currentScreen} onSelectScreen={onScreenChange} />
+
+      {/* Interactive Workflow Progression Stepper */}
+      <WorkflowStepper currentScreen={currentScreen} onSelectScreen={onScreenChange} activeApp={activeApp} />
+
+      {/* Out of Scope Hard Block Banner (Rule 1) */}
+      {activeApp?.isOutOfScope && (
+        <div style={{
+          background: 'linear-gradient(90deg, #fef2f2 0%, #fee2e2 100%)',
+          borderBottom: '2px solid #ef4444',
+          padding: '12px 24px',
+          color: '#991b1b',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          fontWeight: 700,
+          fontSize: '13.5px'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '18px' }}>⛔</span>
+            <span>Out of scope: Ticket size exceeds ₹25 Lakh ceiling (Requested: ₹{(activeApp.amount / 100000).toFixed(1)} Lakh)</span>
+          </div>
+          <span style={{
+            background: '#ef4444',
+            color: '#fff',
+            padding: '3px 10px',
+            borderRadius: '6px',
+            fontSize: '11px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em'
+          }}>
+            Approval Blocked
+          </span>
+        </div>
+      )}
 
       {/* Active Case Context Banner */}
       {activeApp && (
