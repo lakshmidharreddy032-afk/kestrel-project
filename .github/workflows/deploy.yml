@@ -173,34 +173,60 @@ jobs:
             --repository-format=docker --location=${{ env.REGION }} \
             --project="$PROJECT_ID" || true
 
-      - name: Build and Push OCI Image to GCP Artifact Registry
-        if: steps.gcp-auth.outputs.mode != 'none'
-        run: |
-          PROJECT_ID="${{ steps.gcp-auth.outputs.project_id || steps.auth-wif.outputs.project_id }}"
-          IMAGE="${{ env.REGION }}-docker.pkg.dev/${PROJECT_ID}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:${{ github.sha }}"
-          LATEST="${{ env.REGION }}-docker.pkg.dev/${PROJECT_ID}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:latest"
-          docker build -t "$IMAGE" -t "$LATEST" .
-          docker push "$IMAGE"
-          docker push "$LATEST"
-
       - name: Deploy to Google Cloud Run
         if: steps.gcp-auth.outputs.mode != 'none'
         id: deploy
         run: |
           PROJECT_ID="${{ steps.gcp-auth.outputs.project_id || steps.auth-wif.outputs.project_id }}"
+          CREDS_FILE="${{ steps.gcp-auth.outputs.creds_file }}"
           IMAGE="${{ env.REGION }}-docker.pkg.dev/${PROJECT_ID}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:${{ github.sha }}"
 
-          gcloud run deploy ${{ env.SERVICE_NAME }} \
-            --image="$IMAGE" \
+          echo "Authenticating Docker with Service Account key..."
+          if [ -f "$CREDS_FILE" ]; then
+            cat "$CREDS_FILE" | docker login -u _json_key --password-stdin "https://${{ env.REGION }}-docker.pkg.dev" || true
+          fi
+
+          DEPLOYED=false
+
+          echo "Attempting OCI container push to Artifact Registry..."
+          if docker build -t "$IMAGE" . && docker push "$IMAGE"; then
+            echo "✔ Image pushed successfully. Deploying image to Cloud Run..."
+            if gcloud run deploy ${{ env.SERVICE_NAME }} \
+              --image="$IMAGE" \
+              --region="${{ env.REGION }}" \
+              --project="$PROJECT_ID" \
+              --platform=managed \
+              --allow-unauthenticated \
+              --port=8080 \
+              --cpu=1 \
+              --memory=512Mi \
+              --min-instances=0 \
+              --max-instances=5; then
+              DEPLOYED=true
+            fi
+          fi
+
+          if [ "$DEPLOYED" = false ]; then
+            echo "Artifact Registry push unavailable or restricted. Deploying directly via Cloud Build..."
+            gcloud run deploy ${{ env.SERVICE_NAME }} \
+              --source=. \
+              --region="${{ env.REGION }}" \
+              --project="$PROJECT_ID" \
+              --platform=managed \
+              --allow-unauthenticated \
+              --port=8080 \
+              --cpu=1 \
+              --memory=512Mi \
+              --min-instances=0 \
+              --max-instances=5
+          fi
+
+          # Allow public traffic
+          gcloud run services add-iam-policy-binding ${{ env.SERVICE_NAME }} \
             --region="${{ env.REGION }}" \
             --project="$PROJECT_ID" \
-            --platform=managed \
-            --allow-unauthenticated \
-            --port=8080 \
-            --cpu=1 \
-            --memory=512Mi \
-            --min-instances=0 \
-            --max-instances=5
+            --member=allUsers \
+            --role=roles/run.invoker || true
 
           URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} \
             --region="${{ env.REGION }}" \
@@ -209,7 +235,7 @@ jobs:
 
           echo "url=${URL}" >> $GITHUB_OUTPUT
           echo "=========================================================="
-          echo "🚀 LIVE KESTREL FINANCE CLOUD RUN URL: ${URL}"
+          echo "🚀 LIVE PRODUCTION URL: ${URL}"
           echo "=========================================================="
 
       - name: Output Deployment Summary
