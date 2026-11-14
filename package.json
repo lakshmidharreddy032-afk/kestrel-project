@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "node --experimental-strip-types src/domain/rules/run-tests.mjs",
-    "test:rules": "node --experimental-strip-types src/domain/rules/run-tests.mjs",
+    "test": "vitest run",
+    "test:rules": "vitest run src/domain/rules/rules.test.ts",
     "test:vitest": "vitest run"
   },
   "dependencies": {
