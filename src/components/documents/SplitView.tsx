@@ -9,6 +9,7 @@ interface SplitViewProps {
   onConfirmFigure?: (figId: string) => void;
   onOpenOverride?: (fig: ExtractedFigure) => void;
   canEdit?: boolean;
+  isBlurryCase?: boolean;
 }
 
 export const SplitView: React.FC<SplitViewProps> = ({
@@ -17,7 +18,8 @@ export const SplitView: React.FC<SplitViewProps> = ({
   onSelectFigure,
   onConfirmFigure,
   onOpenOverride,
-  canEdit = false
+  canEdit = false,
+  isBlurryCase = false
 }) => {
   const [docType, setDocType] = useState<'bank' | 'gst'>('bank');
   const [zoom, setZoom] = useState<number>(100);
@@ -154,7 +156,12 @@ export const SplitView: React.FC<SplitViewProps> = ({
                 <strong style={{ fontSize: '13px', color: '#065f46' }}>FORM GSTR-3B — GOVERNMENT OF INDIA</strong><br/>
                 <span style={{ fontSize: '10.5px', color: '#4b5563' }}>GSTIN: 36AAACM8492Q1ZT | Legal Name: Malabar Spices & Agro LLP</span>
               </div>
-              <div style={{ background: '#ecfdf5', padding: '8px', borderRadius: '4px', marginBottom: '12px' }}>
+              {isBlurryCase && (
+                <div style={{ background: '#fffbeb', border: '1px dashed #f59e0b', borderRadius: '6px', padding: '8px 10px', marginBottom: '10px', color: '#92400e', fontSize: '11px' }}>
+                  <strong>⚠️ Degraded Scan Quality (44%):</strong> Diagonal page crease across Table 3.1. Row (a) trailing digit smudged. Model confidence dropped to 54% (Optical Drift Alert).
+                </div>
+              )}
+              <div style={{ background: isBlurryCase ? '#fef9c3' : '#ecfdf5', padding: '8px', borderRadius: '4px', marginBottom: '12px' }}>
                 <strong>Table 3.1: Details of Outward Supplies & Inward Supplies Liable to Reverse Charge</strong>
               </div>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '11px' }}>
@@ -167,9 +174,18 @@ export const SplitView: React.FC<SplitViewProps> = ({
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style={{ background: '#fff' }}>
+                  <tr style={{ background: isBlurryCase ? '#fef3c7' : '#fff' }}>
                     <td>(a) Outward taxable supplies (other than zero rated)</td>
-                    <td style={{ textAlign: 'right', fontWeight: 'bold', color: '#065f46' }}>₹ 1,62,00,000</td>
+                    <td style={{ textAlign: 'right', fontWeight: 'bold', color: isBlurryCase ? '#b45309' : '#065f46' }}>
+                      {isBlurryCase ? (
+                        <span>
+                          <span style={{ textDecoration: 'line-through', opacity: 0.6, marginRight: '4px' }}>₹ 1,42,000</span>
+                          <span style={{ color: '#b91c1c', fontSize: '10px', background: '#fee2e2', padding: '1px 4px', borderRadius: '3px' }}>SMUDGED</span>
+                        </span>
+                      ) : (
+                        '₹ 1,62,00,000'
+                      )}
+                    </td>
                     <td style={{ textAlign: 'right' }}>₹ 8,10,000</td>
                     <td style={{ textAlign: 'right' }}>₹ 4,05,000</td>
                   </tr>
