@@ -1,0 +1,239 @@
+import React, { useState } from 'react';
+import type { ExtractedFigure } from '../../domain/types';
+import { SourceHighlight } from './SourceHighlight';
+
+interface SplitViewProps {
+  figures: ExtractedFigure[];
+  selectedFigureId: string | null;
+  onSelectFigure: (figId: string) => void;
+  onConfirmFigure?: (figId: string) => void;
+  onOpenOverride?: (fig: ExtractedFigure) => void;
+  canEdit?: boolean;
+}
+
+export const SplitView: React.FC<SplitViewProps> = ({
+  figures,
+  selectedFigureId,
+  onSelectFigure,
+  onConfirmFigure,
+  onOpenOverride,
+  canEdit = false
+}) => {
+  const [docType, setDocType] = useState<'bank' | 'gst'>('bank');
+  const pageNumber = docType === 'bank' ? 1 : 2;
+  const pageFigures = figures.filter(f => f.sourcePage === pageNumber);
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(420px, 1.2fr) minmax(360px, 1fr)', gap: '20px' }}>
+      
+      {/* Left Pane: Rendered Mock Statement with Interactive Bounding Boxes */}
+      <div style={{ background: 'var(--card)', borderRadius: '12px', border: '1px solid var(--line)', padding: '16px', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+          <div>
+            <h4 style={{ fontSize: '14px', fontWeight: 700 }}>
+              {docType === 'bank' ? 'HDFC Bank Current Account Statement' : 'Government of India — GST Return (GSTR-3B)'}
+            </h4>
+            <span style={{ fontSize: '11px', color: 'var(--mute)' }}>
+              {docType === 'bank' ? 'Period: May 2026 – Oct 2026 • Page 1 of 1' : 'Annual Consolidated Filing • Nov 2025 – Oct 2026'}
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', gap: '6px' }}>
+            <button
+              type="button"
+              onClick={() => setDocType('bank')}
+              style={{
+                padding: '4px 10px', fontSize: '11.5px', fontWeight: docType === 'bank' ? 700 : 500, borderRadius: '6px',
+                border: '1px solid var(--line)', background: docType === 'bank' ? 'var(--blue-bg)' : 'var(--card)',
+                color: docType === 'bank' ? 'var(--blue)' : 'var(--ink)'
+              }}
+            >
+              Bank Statement
+            </button>
+            <button
+              type="button"
+              onClick={() => setDocType('gst')}
+              style={{
+                padding: '4px 10px', fontSize: '11.5px', fontWeight: docType === 'gst' ? 700 : 500, borderRadius: '6px',
+                border: '1px solid var(--line)', background: docType === 'gst' ? 'var(--blue-bg)' : 'var(--card)',
+                color: docType === 'gst' ? 'var(--blue)' : 'var(--ink)'
+              }}
+            >
+              GSTR-3B Return
+            </button>
+          </div>
+        </div>
+
+        {/* Document Rendering Surface */}
+        <div style={{
+          position: 'relative', width: '100%', height: '480px', background: '#fdfdfd', border: '1px solid #d1d5db',
+          borderRadius: '8px', padding: '16px', fontFamily: 'var(--mono)', fontSize: '11.5px', color: '#1f2937', overflow: 'hidden'
+        }}>
+          {docType === 'bank' ? (
+            <div>
+              <div style={{ borderBottom: '2px solid #1e3a8a', paddingBottom: '6px', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '13px', color: '#1e3a8a' }}>HDFC BANK LIMITED — CURRENT ACCOUNT STATEMENT</strong><br/>
+                <span>Account: 50200084729104 | IFSC: HDFC0001092 | Branch: Industrial Area, Hyderabad</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', background: '#f3f4f6', padding: '8px', borderRadius: '4px', marginBottom: '12px' }}>
+                <div><strong>Period:</strong> 01/05/2026 to 31/10/2026</div>
+                <div><strong>Currency:</strong> INR (₹)</div>
+                <div><strong>Total Credits:</strong> ₹ 84,50,000</div>
+                <div><strong>Total Debits:</strong> ₹ 78,20,000</div>
+              </div>
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '11px' }}>
+                <thead>
+                  <tr style={{ borderBottom: '1px solid #9ca3af', background: '#e5e7eb' }}>
+                    <th style={{ padding: '4px' }}>Date</th>
+                    <th style={{ padding: '4px' }}>Description</th>
+                    <th style={{ padding: '4px' }}>Chq/Ref</th>
+                    <th style={{ padding: '4px', textAlign: 'right' }}>Credit</th>
+                    <th style={{ padding: '4px', textAlign: 'right' }}>Debit</th>
+                    <th style={{ padding: '4px', textAlign: 'right' }}>Balance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>02/05/26</td><td>NEFT Inward - Malabar Spices</td><td>N92810</td><td style={{ textAlign: 'right' }}>₹ 14,20,000</td><td>-</td><td style={{ textAlign: 'right' }}>₹ 18,50,000</td></tr>
+                  <tr><td>18/06/26</td><td>RTGS Inward - Bulk Agro Buyers</td><td>R44102</td><td style={{ textAlign: 'right' }}>₹ 22,00,000</td><td>-</td><td style={{ textAlign: 'right' }}>₹ 25,40,000</td></tr>
+                  <tr><td>31/07/26</td><td>Vendor Payouts - Operations</td><td>CMS812</td><td>-</td><td style={{ textAlign: 'right' }}>₹ 12,80,000</td><td style={{ textAlign: 'right' }}>₹ 12,60,000</td></tr>
+                  <tr><td>31/10/26</td><td>Month End Calculated AMB</td><td>SYS-INT</td><td>-</td><td>-</td><td style={{ textAlign: 'right', fontWeight: 'bold' }}>₹ 4,85,000</td></tr>
+                  <tr><td>31/10/26</td><td>Inward ECS / Cheque Dishonour</td><td>RTN-00</td><td>-</td><td>-</td><td style={{ textAlign: 'right' }}>0 Returns</td></tr>
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div>
+              <div style={{ borderBottom: '2px solid #065f46', paddingBottom: '6px', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '13px', color: '#065f46' }}>FORM GSTR-3B — GOVERNMENT OF INDIA</strong><br/>
+                <span>GSTIN: 36AAACM8492Q1ZT | Legal Name: Malabar Spices & Agro LLP</span>
+              </div>
+              <div style={{ background: '#ecfdf5', padding: '8px', borderRadius: '4px', marginBottom: '12px' }}>
+                <strong>Table 3.1: Details of Outward Supplies & Inward Supplies Liable to Reverse Charge</strong>
+              </div>
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '11px' }}>
+                <thead>
+                  <tr style={{ borderBottom: '1px solid #9ca3af', background: '#e5e7eb' }}>
+                    <th style={{ padding: '4px' }}>Nature of Supply</th>
+                    <th style={{ padding: '4px', textAlign: 'right' }}>Total Taxable Value</th>
+                    <th style={{ padding: '4px', textAlign: 'right' }}>IGST</th>
+                    <th style={{ padding: '4px', textAlign: 'right' }}>CGST</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style={{ background: '#fff' }}>
+                    <td>(a) Outward taxable supplies (other than zero rated)</td>
+                    <td style={{ textAlign: 'right', fontWeight: 'bold', color: '#065f46' }}>₹ 1,62,00,000</td>
+                    <td style={{ textAlign: 'right' }}>₹ 8,10,000</td>
+                    <td style={{ textAlign: 'right' }}>₹ 4,05,000</td>
+                  </tr>
+                  <tr>
+                    <td>(b) Outward taxable supplies (zero rated)</td>
+                    <td style={{ textAlign: 'right' }}>₹ 0</td>
+                    <td style={{ textAlign: 'right' }}>₹ 0</td>
+                    <td style={{ textAlign: 'right' }}>₹ 0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Interactive Bounding Box Highlights Layer */}
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'auto' }}>
+            {pageFigures.map(fig => (
+              <SourceHighlight
+                key={fig.id}
+                figure={fig}
+                isSelected={fig.id === selectedFigureId}
+                onSelect={onSelectFigure}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Right Pane: Extracted Figure Table */}
+      <div style={{ background: 'var(--card)', borderRadius: '12px', border: '1px solid var(--line)', padding: '16px', display: 'flex', flexDirection: 'column' }}>
+        <h4 style={{ fontSize: '14px', fontWeight: 700, marginBottom: '4px' }}>Extracted Figures Table</h4>
+        <p style={{ fontSize: '12px', color: 'var(--mute)', marginBottom: '12px' }}>
+          Click any figure to cross-reference coordinates on the source document.
+        </p>
+
+        <div style={{ overflowX: 'auto', flex: 1 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--line)', textAlign: 'left', color: 'var(--mute)' }}>
+                <th style={{ padding: '8px' }}>Metric</th>
+                <th style={{ padding: '8px', textAlign: 'right' }}>Extracted</th>
+                <th style={{ padding: '8px' }}>Confidence</th>
+                <th style={{ padding: '8px' }}>Status</th>
+                {canEdit && <th style={{ padding: '8px', textAlign: 'center' }}>Action</th>}
+              </tr>
+            </thead>
+            <tbody>
+              {figures.map(fig => {
+                const isSelected = fig.id === selectedFigureId;
+                const statusColor = fig.status === 'Confirmed' ? 'var(--ok-ink)' : fig.status === 'Overridden' ? 'var(--purple-ink)' : 'var(--warn-ink)';
+                const statusBg = fig.status === 'Confirmed' ? 'var(--ok-bg)' : fig.status === 'Overridden' ? 'var(--purple-bg)' : 'var(--warn-bg)';
+
+                return (
+                  <tr
+                    key={fig.id}
+                    onClick={() => {
+                      onSelectFigure(fig.id);
+                      setDocType(fig.sourcePage === 1 ? 'bank' : 'gst');
+                    }}
+                    style={{
+                      borderBottom: '1px solid var(--line)',
+                      cursor: 'pointer',
+                      background: isSelected ? 'var(--blue-light)' : 'transparent',
+                      transition: 'background 0.15s'
+                    }}
+                  >
+                    <td style={{ padding: '8px' }}>
+                      <div style={{ fontWeight: 600 }}>{fig.label}</div>
+                      <div style={{ fontSize: '10.5px', color: 'var(--mute)' }}>Page {fig.sourcePage}</div>
+                    </td>
+                    <td style={{ padding: '8px', textAlign: 'right', fontFamily: 'var(--mono)', fontWeight: 700 }}>
+                      ₹{fig.confirmedValue !== null ? fig.confirmedValue.toLocaleString('en-IN') : fig.extractedValue.toLocaleString('en-IN')}
+                    </td>
+                    <td style={{ padding: '8px' }}>
+                      <span style={{ fontSize: '11px', fontFamily: 'var(--mono)', color: 'var(--mute)' }}>
+                        {(fig.confidence * 100).toFixed(0)}%
+                      </span>
+                    </td>
+                    <td style={{ padding: '8px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', background: statusBg, color: statusColor }}>
+                        {fig.status}
+                      </span>
+                    </td>
+                    {canEdit && (
+                      <td style={{ padding: '8px', textAlign: 'center' }}>
+                        <div style={{ display: 'flex', gap: '4px', justifyContent: 'center' }}>
+                          <button
+                            type="button"
+                            onClick={(e) => { e.stopPropagation(); onConfirmFigure?.(fig.id); }}
+                            style={{ padding: '3px 7px', fontSize: '11px', borderRadius: '4px', border: '1px solid var(--ok-border)', background: 'var(--ok-bg)', color: 'var(--ok-ink)', cursor: 'pointer' }}
+                          >
+                            ✔
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => { e.stopPropagation(); onOpenOverride?.(fig); }}
+                            style={{ padding: '3px 7px', fontSize: '11px', borderRadius: '4px', border: '1px solid var(--purple-border)', background: 'var(--purple-bg)', color: 'var(--purple-ink)', cursor: 'pointer' }}
+                          >
+                            ✎
+                          </button>
+                        </div>
+                      </td>
+                    )}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  );
+};

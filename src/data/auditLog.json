@@ -1,0 +1,62 @@
+[
+  {
+    "id": "AUD-901",
+    "timestamp": "2026-11-12 10:14:02",
+    "user": "System (Local Parser)",
+    "role": "Analyst",
+    "action": "MOCK_EXTRACTION_LOADED",
+    "applicationId": "APP-1001",
+    "details": "Mock extraction completed for 6 figures across HDFC bank statement and GSTR-3B.",
+    "modelVersion": "kestrel-mock-ocr-v1.0 (local)"
+  },
+  {
+    "id": "AUD-902",
+    "timestamp": "2026-11-12 11:20:15",
+    "user": "Meena Pillai (Fictional)",
+    "role": "Analyst",
+    "action": "FIGURE_CONFIRMED",
+    "applicationId": "APP-1003",
+    "details": "Confirmed Total Operational Credits: ₹62,00,000 verified against page 1 table.",
+    "modelVersion": "kestrel-mock-ocr-v1.0 (local)"
+  },
+  {
+    "id": "AUD-903",
+    "timestamp": "2026-11-12 11:22:40",
+    "user": "Meena Pillai (Fictional)",
+    "role": "Analyst",
+    "action": "FIGURE_OVERRIDDEN",
+    "applicationId": "APP-1003",
+    "details": "Override: Inward bounces adjusted from 1 to 0. Reason: Return code 88 was technical bank reversal, not financial dishonour.",
+    "modelVersion": "kestrel-mock-ocr-v1.0 (local)"
+  },
+  {
+    "id": "AUD-904",
+    "timestamp": "2026-11-12 11:26:00",
+    "user": "Meena Pillai (Fictional)",
+    "role": "Analyst",
+    "action": "SPREADING_SYNCED",
+    "applicationId": "APP-1003",
+    "details": "All 6 figures confirmed. Sent to pre-filled spreading sheet and legacy scorecard.",
+    "modelVersion": "kestrel-mock-ocr-v1.0 (local)"
+  },
+  {
+    "id": "AUD-905",
+    "timestamp": "2026-11-12 14:05:12",
+    "user": "Arjun Iyer (Fictional)",
+    "role": "Credit Officer",
+    "action": "CREDIT_SIGNOFF",
+    "applicationId": "APP-1006",
+    "details": "Approved ₹24,00,000 SME term loan. DSCR 1.8x, clean bank conduct, valid GST returns.",
+    "modelVersion": "kestrel-mock-ocr-v1.0 (local)"
+  },
+  {
+    "id": "AUD-906",
+    "timestamp": "2026-11-13 09:30:45",
+    "user": "Vikram Rao (Fictional)",
+    "role": "Relationship Manager",
+    "action": "CONSOLIDATED_REQUEST_GENERATED",
+    "applicationId": "APP-1002",
+    "details": "Consolidated single document chase generated for Q3 GST Returns and Bank Statement duplicate resolution.",
+    "modelVersion": "kestrel-mock-ocr-v1.0 (local)"
+  }
+]

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#f6f8fc" rx="16"/>
+  <rect x="24" y="24" width="752" height="60" fill="#ffffff" rx="12" stroke="#e2e8f0"/>
+  <text x="50" y="60" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#1e56a0">KESTREL FINANCE</text>
+  <text x="260" y="60" font-family="Inter, sans-serif" font-size="14" fill="#64748b">Screen 03: Gap Check Results (S3)</text>
+  <rect x="24" y="108" width="752" height="368" fill="#ffffff" rx="12" stroke="#e2e8f0"/>
+  <text x="50" y="160" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#0f172a">Gap Check Results (S3)</text>
+  <text x="50" y="195" font-family="Inter, sans-serif" font-size="13" fill="#64748b">Missing docs, duplicate hashes, period coverage</text>
+  <rect x="50" y="230" width="700" height="200" fill="#f8fafd" rx="8" stroke="#cbd5e1" stroke-dasharray="4"/>
+  <text x="400" y="335" font-family="Inter, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">[Mock Wireframe Design Export - Screen 03]</text>
+</svg>

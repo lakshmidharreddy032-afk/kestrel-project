@@ -1,0 +1,28 @@
+{
+  "benchmarks": {
+    "minAMB": 50000,
+    "minDSCR": 1.35,
+    "maxChequeBounces": 2,
+    "gstTurnoverRatioMin": 0.85,
+    "gstTurnoverRatioMax": 1.25
+  },
+  "scorecard": {
+    "score": 68,
+    "maxScore": 100,
+    "tier": "Tier B - Standard SME",
+    "riskBand": "Moderate Operational Risk",
+    "status": "Scorecard: existing, unchanged",
+    "lastRecalibrated": "2025-10-15",
+    "disclaimer": "Hard Rule: AI and models do not compute or alter credit scores. This is the existing Kestrel scorecard model, unchanged."
+  },
+  "metricDefinitions": [
+    { "key": "totalCredits", "label": "Total Bank Credits (6 Months)", "formula": "Sum of operational credits", "source": "Bank Statement" },
+    { "key": "avgMonthlyCredit", "label": "Average Monthly Credit", "formula": "Total Credits ÷ 6 Months", "source": "Derived" },
+    { "key": "totalDebits", "label": "Total Bank Debits (6 Months)", "formula": "Sum of operational withdrawals", "source": "Bank Statement" },
+    { "key": "avgMonthlyBalance", "label": "Average Monthly Balance (AMB)", "formula": "Sum of month-end balances ÷ 6", "source": "Bank Statement" },
+    { "key": "gstTurnover", "label": "Annualized GST Turnover", "formula": "Table 3.1 GSTR-3B Taxable Outward Value", "source": "GST Return" },
+    { "key": "bankGstRatio", "label": "Banking vs GST Turnover Ratio", "formula": "(Bank Credits × 2) ÷ GST Turnover", "source": "Derived" },
+    { "key": "inwardBounces", "label": "Inward Cheque / ECS Returns", "formula": "Count of return code entries", "source": "Bank Statement" },
+    { "key": "dscr", "label": "Estimated Debt Service Coverage (DSCR)", "formula": "Net Cash Accrual ÷ Annual Debt Service", "source": "Derived" }
+  ]
+}

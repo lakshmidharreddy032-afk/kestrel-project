@@ -1,0 +1,87 @@
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  
+  /* Primary Brand Colors */
+  --blue: #1e56a0;
+  --blue-hover: #163e75;
+  --blue-bg: #eaf1fb;
+  --blue-light: #f1f6fd;
+  --blue-border: #bcd5f6;
+  
+  /* Neutral Palette */
+  --bg: #f6f8fc;
+  --card: #ffffff;
+  --card-subtle: #f8fafd;
+  --ink: #0f172a;
+  --ink-secondary: #334155;
+  --mute: #64748b;
+  --line: #e2e8f0;
+  --line2: #cbd5e1;
+  
+  /* Status Accents */
+  --ok-bg: #e6f7ef;
+  --ok-ink: #0e6245;
+  --ok-border: #a3e6cb;
+  
+  --warn-bg: #fef7e6;
+  --warn-ink: #8a5700;
+  --warn-border: #fde09e;
+  
+  --error-bg: #fdf0f2;
+  --error-ink: #a52336;
+  --error-border: #f8b4be;
+  
+  --purple-bg: #f3effe;
+  --purple-ink: #5534b8;
+  --purple-border: #d4c5fb;
+
+  /* Typography */
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --mono: "JetBrains Mono", Consolas, monospace;
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Elevation Shadows */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 14px -2px rgba(0,0,0,0.06), 0 2px 6px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 28px -4px rgba(0,0,0,0.09), 0 4px 10px -2px rgba(0,0,0,0.04);
+  --shadow-glow: 0 0 0 3px rgba(30, 86, 160, 0.2);
+}
+
+:root[data-theme="dark"] {
+  --bg: #090e17;
+  --card: #111827;
+  --card-subtle: #162032;
+  --ink: #f8fafc;
+  --ink-secondary: #cbd5e1;
+  --mute: #94a3b8;
+  --line: #1e293b;
+  --line2: #334155;
+  --blue: #60a5fa;
+  --blue-hover: #93c5fd;
+  --blue-bg: #132238;
+  --blue-light: #172844;
+  --blue-border: #1e3a5f;
+  --ok-bg: #0d281e;
+  --ok-ink: #6ee7b7;
+  --ok-border: #1a4a38;
+  --warn-bg: #322509;
+  --warn-ink: #fcd34d;
+  --warn-border: #573f0e;
+  --error-bg: #35151c;
+  --error-ink: #fda4af;
+  --error-border: #6a1a24;
+  --purple-bg: #221b3d;
+  --purple-ink: #c4b5fd;
+  --purple-border: #433273;
+  color-scheme: dark;
+}

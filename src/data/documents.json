@@ -1,0 +1,210 @@
+{
+  "APP-1001": [
+    {
+      "id": "DOC-1001-1",
+      "type": "bank_statement",
+      "title": "Current Account Statement (HDFC Bank)",
+      "fileName": "Malabar_HDFC_May2026_Oct2026.pdf",
+      "fileHash": "e4d909c290d0fb1ca068ffaddf22cbd0",
+      "periodStart": "2026-05",
+      "periodEnd": "2026-10",
+      "monthsCovered": 6,
+      "status": "Received",
+      "receivedDate": "2026-11-08",
+      "uploadedBy": "Applicant (Portal)",
+      "note": "Covers required 6 months continuously."
+    },
+    {
+      "id": "DOC-1001-2",
+      "type": "gst_return",
+      "title": "GSTR-3B Consolidated Returns (12 Months)",
+      "fileName": "Malabar_GSTR3B_Nov2025_Oct2026.pdf",
+      "fileHash": "fa71c49980d2d5f1f008cb2b61884321",
+      "periodStart": "2025-11",
+      "periodEnd": "2026-10",
+      "monthsCovered": 12,
+      "status": "Received",
+      "receivedDate": "2026-11-08",
+      "uploadedBy": "Applicant (Portal)",
+      "note": "Covers required 12 months."
+    },
+    {
+      "id": "DOC-1001-3",
+      "type": "kyc",
+      "title": "Director PAN & Entity Aadhaar",
+      "fileName": "Malabar_KYC_Directors_Signed.pdf",
+      "fileHash": "9b1c43d83ef30829af467c6114a84091",
+      "status": "Received",
+      "receivedDate": "2026-11-07",
+      "uploadedBy": "RM (Vikram Rao)",
+      "note": "Verified against MCA database."
+    },
+    {
+      "id": "DOC-1001-4",
+      "type": "business_proof",
+      "title": "Udyam Registration Certificate & GST Reg",
+      "fileName": "Malabar_Udyam_Registration.pdf",
+      "fileHash": "c20ad4d76fe97759aa27a0c99bff6710",
+      "status": "Received",
+      "receivedDate": "2026-11-07",
+      "uploadedBy": "RM (Vikram Rao)",
+      "note": "Valid MSME certificate on file."
+    }
+  ],
+  "APP-1002": [
+    {
+      "id": "DOC-1002-1",
+      "type": "bank_statement",
+      "title": "ICICI Bank Statement (May-Jul 2026)",
+      "fileName": "Apex_ICICI_Part1_May_Jul.pdf",
+      "fileHash": "88a312bb45df7190ca881726a4501b12",
+      "periodStart": "2026-05",
+      "periodEnd": "2026-07",
+      "monthsCovered": 3,
+      "status": "Received",
+      "receivedDate": "2026-11-03",
+      "uploadedBy": "Applicant"
+    },
+    {
+      "id": "DOC-1002-2",
+      "type": "bank_statement",
+      "title": "ICICI Bank Statement (Duplicate Upload)",
+      "fileName": "Apex_ICICI_Copy_Scan.pdf",
+      "fileHash": "88a312bb45df7190ca881726a4501b12",
+      "periodStart": "2026-05",
+      "periodEnd": "2026-07",
+      "monthsCovered": 3,
+      "status": "Duplicate",
+      "duplicateOfId": "DOC-1002-1",
+      "receivedDate": "2026-11-04",
+      "uploadedBy": "Applicant",
+      "note": "Exact file hash matches DOC-1002-1. Flagged as duplicate."
+    },
+    {
+      "id": "DOC-1002-3",
+      "type": "gst_return",
+      "title": "GSTR-3B Oct 2025 - Jun 2026 (9 Months)",
+      "fileName": "Apex_GSTR3B_9Months.pdf",
+      "fileHash": "34de9201f9c891ab01e54ca1b992f034",
+      "periodStart": "2025-10",
+      "periodEnd": "2026-06",
+      "monthsCovered": 9,
+      "status": "Received",
+      "receivedDate": "2026-11-03",
+      "uploadedBy": "Applicant",
+      "note": "Missing last 3 months (Jul-Sep 2026)."
+    },
+    {
+      "id": "DOC-1002-4",
+      "type": "kyc",
+      "title": "PAN of Managing Director",
+      "fileName": "Apex_Director_PAN.pdf",
+      "fileHash": "61a003ec84ef9b3074091a117cb39811",
+      "status": "Received",
+      "receivedDate": "2026-11-02",
+      "uploadedBy": "RM"
+    },
+    {
+      "id": "DOC-1002-5",
+      "type": "business_proof",
+      "title": "Certificate of Incorporation",
+      "fileName": "",
+      "fileHash": "",
+      "status": "Missing",
+      "note": "Document required for Pvt Ltd borrower."
+    }
+  ],
+  "APP-1003": [
+    {
+      "id": "DOC-1003-1",
+      "type": "bank_statement",
+      "title": "Axis Bank Current A/c Statement (6 Months)",
+      "fileName": "Deccan_Axis_May2026_Oct2026.pdf",
+      "fileHash": "77bc2100ae9817f54c9876ab3421ec89",
+      "periodStart": "2026-05",
+      "periodEnd": "2026-10",
+      "monthsCovered": 6,
+      "status": "Received",
+      "receivedDate": "2026-11-10",
+      "uploadedBy": "Applicant"
+    },
+    {
+      "id": "DOC-1003-2",
+      "type": "gst_return",
+      "title": "GSTR-3B Annual Filing (12 Months)",
+      "fileName": "Deccan_GSTR3B_FY26.pdf",
+      "fileHash": "1290bcda456ef012398711aabbccdde1",
+      "periodStart": "2025-11",
+      "periodEnd": "2026-10",
+      "monthsCovered": 12,
+      "status": "Received",
+      "receivedDate": "2026-11-10",
+      "uploadedBy": "Applicant"
+    },
+    {
+      "id": "DOC-1003-3",
+      "type": "kyc",
+      "title": "Partnership Deed & Partner PAN Cards",
+      "fileName": "Deccan_KYC_Partners.pdf",
+      "fileHash": "99aa88bb77cc66dd55ee44ff33221100",
+      "status": "Received",
+      "receivedDate": "2026-11-09",
+      "uploadedBy": "RM"
+    },
+    {
+      "id": "DOC-1003-4",
+      "type": "business_proof",
+      "title": "GST Registration Certificate",
+      "fileName": "Deccan_GST_Cert.pdf",
+      "fileHash": "4433221100ffeeddccbbaa9988776655",
+      "status": "Received",
+      "receivedDate": "2026-11-09",
+      "uploadedBy": "RM"
+    }
+  ],
+  "APP-1007": [
+    {
+      "id": "DOC-1007-1",
+      "type": "bank_statement",
+      "title": "State Bank of India Account (4 Months only)",
+      "fileName": "Sahyadri_SBI_Jul_Oct2026.pdf",
+      "fileHash": "41fa8901239bc7145890eef14209cb11",
+      "periodStart": "2026-07",
+      "periodEnd": "2026-10",
+      "monthsCovered": 4,
+      "status": "Received",
+      "receivedDate": "2026-11-11",
+      "uploadedBy": "Applicant",
+      "note": "Deficient period: Only 4 months submitted; 6 consecutive months required."
+    },
+    {
+      "id": "DOC-1007-2",
+      "type": "gst_return",
+      "title": "GSTR-3B Incomplete Filing",
+      "fileName": "",
+      "fileHash": "",
+      "status": "Missing",
+      "note": "GST return document not yet uploaded by borrower."
+    },
+    {
+      "id": "DOC-1007-3",
+      "type": "kyc",
+      "title": "Proprietor PAN & Aadhaar",
+      "fileName": "Sahyadri_KYC.pdf",
+      "fileHash": "7861bc9012eecfa45012398a1240f901",
+      "status": "Received",
+      "receivedDate": "2026-11-11",
+      "uploadedBy": "Applicant"
+    },
+    {
+      "id": "DOC-1007-4",
+      "type": "business_proof",
+      "title": "Udyam Aadhar Registration",
+      "fileName": "Sahyadri_Udyam.pdf",
+      "fileHash": "11223344556677889900aabbccddeeff",
+      "status": "Received",
+      "receivedDate": "2026-11-11",
+      "uploadedBy": "Applicant"
+    }
+  ]
+}
