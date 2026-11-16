@@ -1,4 +1,27 @@
-export type UserRole = 'Relationship Manager' | 'Analyst' | 'Credit Officer' | 'Owner';
+export type UserRole = 'Relationship Manager' | 'Analyst' | 'Credit Officer' | 'Owner' | 'Auditor';
+
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  title: string;
+  department: string;
+  employeeId: string;
+  avatarClass: string;
+  initials: string;
+  lastLogin: string;
+  sessionToken: string;
+  canSendRequests: boolean;
+  canConfirmFigures: boolean;
+  canOverrideFigures: boolean;
+  canSyncSpreading: boolean;
+  canSignOffCredit: boolean;
+  canViewObservability: boolean;
+  canExportAudit: boolean;
+  allowedActions: string[];
+  restrictedActions: string[];
+}
 
 export interface LLMCallTrace {
   id: string;

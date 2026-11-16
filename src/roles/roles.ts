@@ -81,5 +81,21 @@ export const ROLES: Record<UserRole, RoleConfig> = {
       canSignOffCredit: false,
       canViewObservability: true
     }
+  },
+  'Auditor': {
+    id: 'Auditor',
+    name: 'Pooja Deshmukh',
+    initials: 'PD',
+    avatarClass: 'avatar-auditor',
+    title: 'RBI Regulatory Auditor (Fictional)',
+    description: 'Independent Audit, Tamper-Evident Logs & Board Metric Inspection',
+    permissions: {
+      canSendRequests: false,
+      canConfirmFigures: false,
+      canOverrideFigures: false,
+      canSyncSpreading: false,
+      canSignOffCredit: false,
+      canViewObservability: false
+    }
   }
 };

@@ -10,6 +10,9 @@ import { CreditSignOff } from './screens/signOff/CreditSignOff';
 import { AuditLogTable } from './screens/auditLog/AuditLogTable';
 import { MetricsDashboard } from './screens/dashboard/MetricsDashboard';
 import { LLMObservability } from './screens/observability/LLMObservability';
+import { LoginScreen } from './screens/auth/LoginScreen';
+import { AuthService } from './services/auth';
+import type { AuthUser } from './domain/types';
 import { ROLES } from './roles/roles';
 import { SCREENS } from './components/layout/Sidebar';
 import { ToastProvider, useToast } from './components/ui/Toast';
@@ -17,6 +20,9 @@ import { ToastProvider, useToast } from './components/ui/Toast';
 const AppContent: React.FC = () => {
   const [state, setState] = useState(store.getState());
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [authSession, setAuthSession] = useState<{ isAuthenticated: boolean; currentUser: AuthUser | null }>(
+    AuthService.getInitialSession()
+  );
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -47,6 +53,29 @@ const AppContent: React.FC = () => {
     document.documentElement.setAttribute('data-theme', nextTheme);
   };
 
+  const handleLogout = () => {
+    AuthService.logout();
+    setAuthSession({ isAuthenticated: false, currentUser: null });
+    showToast('info', 'Signed Out', 'Your session has been terminated securely.');
+  };
+
+  // If not authenticated, render LoginScreen
+  if (!authSession.isAuthenticated || !authSession.currentUser) {
+    return (
+      <LoginScreen
+        onLoginSuccess={user => {
+          setAuthSession({ isAuthenticated: true, currentUser: user });
+          store.setRole(user.role);
+          if (user.role === 'Owner') store.setScreen('observability');
+          else if (user.role === 'Auditor') store.setScreen('auditLog');
+          else if (user.role === 'Analyst') store.setScreen('extraction');
+          else if (user.role === 'Credit Officer') store.setScreen('signOff');
+          else store.setScreen('applications');
+        }}
+      />
+    );
+  }
+
   const activeApp = state.applications.find(a => a.id === state.activeCaseId) || state.applications[0];
   const activeDocs = state.documents[state.activeCaseId] || [];
   const activeFigures = state.extractions[state.activeCaseId] || [];
@@ -54,13 +83,21 @@ const AppContent: React.FC = () => {
   return (
     <AppShell
       currentRole={state.currentRole}
+      currentUser={authSession.currentUser}
+      onLogout={handleLogout}
       onRoleChange={role => {
         store.setRole(role);
+        const newUser = AuthService.getUserByRole(role);
+        setAuthSession({ isAuthenticated: true, currentUser: newUser });
+        AuthService.saveSession(newUser);
         if (role === 'Owner') {
           store.setScreen('observability');
           showToast('info', 'Platform Owner Mode Active', 'Switched to LLM Observability & Model Cost Accounting.');
+        } else if (role === 'Auditor') {
+          store.setScreen('auditLog');
+          showToast('info', 'Auditor Mode Active', 'Operating as Regulatory Auditor (Read-Only)');
         } else {
-          showToast('info', 'Active Persona Switched', `Now operating as ${role}`);
+          showToast('info', 'Active Persona Switched', `Now operating as ${role} (${newUser.name})`);
         }
       }}
       currentScreen={state.currentScreen}

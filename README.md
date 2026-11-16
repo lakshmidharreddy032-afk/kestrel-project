@@ -88,16 +88,27 @@ For compliance and regulatory review, the production model extraction architectu
 
 ---
 
-## 👥 Role-Based Access Control (RBAC) Matrix
+## 👥 Role-Based Access Control (RBAC) & Capabilities Matrix
 
-A persistent **Role Switcher** in the top navigation bar allows instantaneous switching between operational personas:
+The platform enforces strict separation of duties under RBI NBFC governance guidelines. Users authenticate into designated roles with verified capabilities and non-negotiable boundaries:
 
-| Operational Persona | Active User | Document Intake (S1) | Gap Checks (S3) | OCR Split-View (S4) | Analyst Figure Gate | Spreading Sheet (S5) | Credit Sanction (S6) | LLM Observability & Cost |
-|---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Relationship Manager (RM)** | Vikram Rao | ✔ Upload & Dispatch | ✔ View Results | ✔ Read-Only | ✕ Blocked | ✔ Read-Only | ✕ Blocked | ✕ Blocked |
-| **Credit Analyst** | Meena Pillai | ✔ View Checklist | ✔ Run Diagnostics | ✔ Full Edit | ✔ Accept / Override | ✔ Commit & Sync | ✕ Blocked | ✕ Read-Only |
-| **Credit Officer** | Arjun Iyer | ✔ View Checklist | ✔ View Results | ✔ Read-Only | ✔ Read-Only | ✔ View Ratios & 5-C | ✔ Full Sanction Gate | ✕ Read-Only |
-| **Platform / AI Owner** | Devina Sen | ✔ Full Oversight | ✔ Full Oversight | ✔ Full Oversight | ✔ Full Oversight | ✔ Full Oversight | ✕ Blocked (Officer Only) | ✔ Full Observability & Cost Console |
+| Operational Persona | Active User | Email & Demo Credentials | What This Persona CAN Do | What This Persona CANNOT Do (Guardrails) |
+|---|---|---|---|---|
+| **Relationship Manager (RM)** | Vikram Rao | `vikram.rao@kestrelfinance.in`<br>`Password@123` | • S1 Document Intake & Checklist Review<br>• Upload Bank Statements, GST, KYC & PAN<br>• Dispatch single-chase deficiency notices<br>• Track file turnaround times against SLA | ❌ Cannot verify or modify OCR financial figures<br>❌ Cannot commit/sync to spreading model<br>❌ Cannot approve, reject, or sanction loans<br>❌ Cannot view LLM token budgets or cost telemetry |
+| **Credit Analyst** | Meena Pillai | `meena.pillai@kestrelfinance.in`<br>`Password@123` | • S3 Diagnostic Checks (gaps & duplicate hashes)<br>• S4 OCR bounding box review & verification<br>• Override smudged figures with reason ($\ge 5$ chars)<br>• Unlock & sync 100% verified metrics to spreading<br>• Inspect 5-C SME Credit Scorecard | ❌ Cannot sign off loan sanction decisions<br>❌ Cannot dispatch borrower deficiency notices<br>❌ Cannot bypass 100% figure verification gate |
+| **Credit Officer** | Arjun Iyer | `arjun.iyer@kestrelfinance.in`<br>`Password@123` | • Review Executive Credit Appraisal Memo (CAM)<br>• Exercise delegated lending authority (&lt; ₹25L)<br>• Sanction facility, refer to committee, or reject<br>• Mandatory written rationale ($\ge 10$ characters)<br>• Issue legally-binding Sanction Letters | ❌ Hard-blocked if loan $\ge$ ₹25 Lakh (Ceiling Rule)<br>❌ Hard-blocked if figures are unverified<br>❌ System never auto-approves: requires human sign-off |
+| **Platform / AI Owner** | Devina Sen | `devina.sen@kestrelfinance.in`<br>`Password@123` | • Complete LLM observability across all models<br>• Token telemetry (prompt, completion, cached)<br>• Live per-call cost accounting (₹ INR and $ USD)<br>• Tenancy audit (GCP asia-south1, Zero Retention)<br>• Trigger live test calls & export telemetry | ❌ Cannot execute credit sanction decisions (reserved for human Credit Officer Arjun Iyer) |
+| **Regulatory Auditor** | Pooja Deshmukh | `compliance.audit@kestrelfinance.in`<br>`Password@123` | • Read-only inspection of immutable audit log<br>• Verify tamper-evident cryptographic event chain<br>• Monitor Gross NPA (&lt; 3.5%) & TAT benchmarks<br>• Export audit logs and memos for RBI inspection | ❌ Read-only access: Cannot modify figures, dispatch notices, or sign loan decisions |
+
+---
+
+## 🔐 Authentication & Session Governance
+
+- **Dedicated Enterprise Login Screen**: Built with corporate Kestrel Finance styling, institutional security badges (RBI Middle-Layer, GCP Sovereign Cloud, Zero Data Retention, 100% Synthetic Data).
+- **1-Click Reviewer Quick Sign-In**: Evaluators and reviewers can sign in instantly with one click as any of the 5 roles without typing.
+- **Active Session Management**: Stores session tokens (`sess-jwt-kf-...`) and last authenticated timestamps with secure logout.
+- **Role Powers Modal (`🛡️ Role Powers`)**: Users can click the header button at any time to inspect their current role's authorized capabilities and non-negotiable restrictions.
+- **Role Switcher**: Persistent top switcher allows rapid testing between personas while keeping session context synchronized.
 
 ---
 

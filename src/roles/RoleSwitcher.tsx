@@ -16,7 +16,7 @@ export const RoleSwitcher: React.FC<RoleSwitcherProps> = ({ currentRole, onRoleC
         <div className={`persona-avatar ${activeConfig.avatarClass}`} style={{
           width: '32px', height: '32px', borderRadius: '50%', display: 'grid', placeItems: 'center',
           fontWeight: 700, fontSize: '12px', color: '#fff',
-          background: currentRole === 'Relationship Manager' ? '#1e56a0' : currentRole === 'Analyst' ? '#5534b8' : currentRole === 'Credit Officer' ? '#0e6245' : '#ea580c',
+          background: currentRole === 'Relationship Manager' ? '#1e56a0' : currentRole === 'Analyst' ? '#5534b8' : currentRole === 'Credit Officer' ? '#0e6245' : currentRole === 'Owner' ? '#ea580c' : '#475569',
           boxShadow: currentRole === 'Owner' ? '0 0 10px rgba(234, 88, 12, 0.4)' : 'none'
         }}>
           {activeConfig.initials}
@@ -27,6 +27,11 @@ export const RoleSwitcher: React.FC<RoleSwitcherProps> = ({ currentRole, onRoleC
             {currentRole === 'Owner' && (
               <span style={{ fontSize: '9px', fontWeight: 800, padding: '1px 5px', borderRadius: '4px', background: '#ffedd5', color: '#ea580c', border: '1px solid #fdba74' }}>
                 AI OPS
+              </span>
+            )}
+            {currentRole === 'Auditor' && (
+              <span style={{ fontSize: '9px', fontWeight: 800, padding: '1px 5px', borderRadius: '4px', background: '#f1f5f9', color: '#475569', border: '1px solid #cbd5e1' }}>
+                AUDIT
               </span>
             )}
           </div>
@@ -62,7 +67,9 @@ export const RoleSwitcher: React.FC<RoleSwitcherProps> = ({ currentRole, onRoleC
               ? 'Analyst (Meena)'
               : role === 'Credit Officer'
               ? 'Credit Officer (Arjun)'
-              : '⚡ Owner (Devina)'}
+              : role === 'Owner'
+              ? '⚡ Owner (Devina)'
+              : '📜 Auditor (Pooja)'}
           </button>
         ))}
       </div>

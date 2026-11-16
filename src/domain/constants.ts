@@ -13,5 +13,6 @@ export const PERSONAS = {
   RM: { name: 'Vikram Rao', role: 'Relationship Manager', initial: 'VR' },
   ANALYST: { name: 'Meena Pillai', role: 'Analyst', initial: 'MP' },
   CREDIT_OFFICER: { name: 'Arjun Iyer', role: 'Credit Officer', initial: 'AI' },
-  OWNER: { name: 'Devina Sen', role: 'Owner', initial: 'DS' }
+  OWNER: { name: 'Devina Sen', role: 'Owner', initial: 'DS' },
+  AUDITOR: { name: 'Pooja Deshmukh', role: 'Auditor', initial: 'PD' }
 };
