@@ -19,8 +19,21 @@ export interface AuthUser {
   canSignOffCredit: boolean;
   canViewObservability: boolean;
   canExportAudit: boolean;
+  canChangePrompts: boolean;
   allowedActions: string[];
   restrictedActions: string[];
+}
+
+export interface ModelPromptConfig {
+  id: string;
+  name: string;
+  targetModel: string;
+  version: string;
+  prompt: string;
+  temperature: number;
+  lastUpdatedBy: string;
+  lastUpdatedAt: string;
+  description: string;
 }
 
 export interface LLMCallTrace {
@@ -142,7 +155,7 @@ export interface AuditLogEntry {
   timestamp: string;
   user: string;
   role: string;
-  action: 'MOCK_EXTRACTION_LOADED' | 'FIGURE_CONFIRMED' | 'FIGURE_OVERRIDDEN' | 'SPREADING_SYNCED' | 'CREDIT_SIGNOFF' | 'CONSOLIDATED_REQUEST_GENERATED';
+  action: 'MOCK_EXTRACTION_LOADED' | 'FIGURE_CONFIRMED' | 'FIGURE_OVERRIDDEN' | 'SPREADING_SYNCED' | 'CREDIT_SIGNOFF' | 'CONSOLIDATED_REQUEST_GENERATED' | 'SYSTEM_PROMPT_UPDATED' | 'SYSTEM_PROMPT_RESET' | string;
   applicationId: string;
   details: string;
   modelVersion: string;

@@ -20,6 +20,7 @@ export const DEMO_USERS: Record<string, AuthUser> = {
     canSignOffCredit: false,
     canViewObservability: false,
     canExportAudit: false,
+    canChangePrompts: false,
     allowedActions: [
       'Document Intake & S1 Checklist review for borrower files',
       'Upload borrower Bank Statements, GSTR-3B, KYC & PAN',
@@ -30,7 +31,8 @@ export const DEMO_USERS: Record<string, AuthUser> = {
       'Cannot verify, modify or override OCR extracted financial metrics',
       'Cannot synchronize figures to the financial spreading model',
       'Cannot approve, sanction, or reject loan facilities',
-      'Cannot view internal LLM token costs or model telemetry'
+      'Cannot view internal LLM token costs or model telemetry',
+      'Cannot edit, change, or deploy model system prompts (Owner Only)'
     ]
   },
   'analyst': {
@@ -52,6 +54,7 @@ export const DEMO_USERS: Record<string, AuthUser> = {
     canSignOffCredit: false,
     canViewObservability: false,
     canExportAudit: true,
+    canChangePrompts: false,
     allowedActions: [
       'Execute S3 Diagnostic Checks (Period gaps & duplicate hashes)',
       'Side-by-side OCR review against original document bounding boxes (S4)',
@@ -62,7 +65,8 @@ export const DEMO_USERS: Record<string, AuthUser> = {
     restrictedActions: [
       'Cannot make final loan sanction decisions (reserved for Credit Officer Arjun Iyer)',
       'Cannot dispatch external deficiency notices to borrowers',
-      'Cannot bypass mandatory 100% verification gate before spreading'
+      'Cannot bypass mandatory 100% verification gate before spreading',
+      'Cannot edit, change, or deploy model system prompts (Owner Only)'
     ]
   },
   'officer': {
@@ -84,6 +88,7 @@ export const DEMO_USERS: Record<string, AuthUser> = {
     canSignOffCredit: true,
     canViewObservability: false,
     canExportAudit: true,
+    canChangePrompts: false,
     allowedActions: [
       'Review Executive Credit Appraisal Memo (CAM) and financial ratios',
       'Exercise delegated lending authority for simple loans under ₹25 Lakh',
@@ -94,7 +99,8 @@ export const DEMO_USERS: Record<string, AuthUser> = {
     restrictedActions: [
       'Cannot approve loans ≥ ₹25 Lakh (hard-blocked by Policy Guardrail #1)',
       'Cannot approve loans with unverified figures (< 100% Analyst verification)',
-      'System never auto-approves: requires human officer credentials and signed rationale'
+      'System never auto-approves: requires human officer credentials and signed rationale',
+      'Cannot edit, change, or deploy model system prompts (Owner Only)'
     ]
   },
   'owner': {
@@ -116,7 +122,9 @@ export const DEMO_USERS: Record<string, AuthUser> = {
     canSignOffCredit: false,
     canViewObservability: true,
     canExportAudit: true,
+    canChangePrompts: true,
     allowedActions: [
+      'Exclusive Authority: Edit, customize, test, and deploy Model System Prompts',
       'Full LLM Observability across Gemini 1.5 Flash, 1.5 Pro, and 2.0 Flash',
       'Real-time token telemetry (prompt, completion, and schema context caching)',
       'Live per-call cost accounting in both INR (₹) and USD ($)',
@@ -148,6 +156,7 @@ export const DEMO_USERS: Record<string, AuthUser> = {
     canSignOffCredit: false,
     canViewObservability: false,
     canExportAudit: true,
+    canChangePrompts: false,
     allowedActions: [
       'Read-only inspection of the full immutable audit trail',
       'Verify cryptographic timestamp provenance and tamper-evident logs',
@@ -157,7 +166,8 @@ export const DEMO_USERS: Record<string, AuthUser> = {
     restrictedActions: [
       'Read-only role: Cannot modify borrower figures or checklist documents',
       'Cannot dispatch deficiency notices or alter spreading sheet models',
-      'Cannot execute loan approval or rejection decisions'
+      'Cannot execute loan approval or rejection decisions',
+      'Cannot edit, change, or deploy model system prompts (Owner Only)'
     ]
   }
 };

@@ -1,8 +1,9 @@
-import type { SMEApplication, DocumentItem, ExtractedFigure, AuditLogEntry, UserRole } from '../domain/types';
+import type { SMEApplication, DocumentItem, ExtractedFigure, AuditLogEntry, UserRole, ModelPromptConfig } from '../domain/types';
 import applicationsSeed from '../data/applications.json';
 import documentsSeed from '../data/documents.json';
 import extractionsSeed from '../data/extractions.json';
 import auditLogSeed from '../data/auditLog.json';
+import { DEFAULT_PROMPTS } from '../domain/prompts';
 import { AuditLogger } from './auditLogger';
 
 const STORAGE_KEY = 'kestrel_credit_workflow_v2';
@@ -16,6 +17,7 @@ export interface AppState {
   currentRole: UserRole;
   currentScreen: string;
   activeDocPage: 'bank' | 'gst';
+  systemPrompts: ModelPromptConfig[];
 }
 
 class AppStore {
@@ -31,7 +33,11 @@ class AppStore {
   private loadInitialState(): AppState {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (!parsed.systemPrompts) parsed.systemPrompts = JSON.parse(JSON.stringify(DEFAULT_PROMPTS));
+        return parsed;
+      }
     } catch {}
 
     return {
@@ -42,7 +48,8 @@ class AppStore {
       activeCaseId: 'APP-1001',
       currentRole: 'Relationship Manager',
       currentScreen: 'applications',
-      activeDocPage: 'bank'
+      activeDocPage: 'bank',
+      systemPrompts: JSON.parse(JSON.stringify(DEFAULT_PROMPTS)) as ModelPromptConfig[]
     };
   }
 
@@ -69,7 +76,8 @@ class AppStore {
       activeCaseId: 'APP-1001',
       currentRole: 'Relationship Manager',
       currentScreen: 'applications',
-      activeDocPage: 'bank'
+      activeDocPage: 'bank',
+      systemPrompts: JSON.parse(JSON.stringify(DEFAULT_PROMPTS)) as ModelPromptConfig[]
     };
     this.logger = new AuditLogger(this.state.auditLog);
     this.save();
@@ -182,6 +190,70 @@ class AppStore {
     );
     this.state.auditLog.unshift(entry);
     this.save();
+  }
+
+  updatePrompt(promptId: string, newText: string, temperature: number, userRole: UserRole, userName: string): { success: boolean; error?: string } {
+    if (userRole !== 'Owner') {
+      return {
+        success: false,
+        error: 'Permission Denied: Only the Platform Owner (Devina Sen) holds delegated authority to update model system instructions.'
+      };
+    }
+
+    if (!this.state.systemPrompts) {
+      this.state.systemPrompts = JSON.parse(JSON.stringify(DEFAULT_PROMPTS));
+    }
+
+    const promptObj = this.state.systemPrompts.find(p => p.id === promptId);
+    if (!promptObj) {
+      return { success: false, error: 'Prompt configuration ID not found.' };
+    }
+
+    promptObj.prompt = newText;
+    promptObj.temperature = temperature;
+    promptObj.version = `v${(parseFloat(promptObj.version.replace('v', '')) + 0.1).toFixed(1)}-custom`;
+    promptObj.lastUpdatedBy = `${userName} (Platform Owner)`;
+    promptObj.lastUpdatedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+    const entry = this.logger.record(
+      'SYSTEM_PROMPT_UPDATED',
+      promptId,
+      userName,
+      'Owner',
+      `Updated ${promptObj.name} prompt instructions (${promptObj.version}). Temperature: ${temperature}.`
+    );
+    this.state.auditLog.unshift(entry);
+    this.save();
+    return { success: true };
+  }
+
+  resetPrompts(userRole: UserRole, userName: string): { success: boolean; error?: string } {
+    if (userRole !== 'Owner') {
+      return {
+        success: false,
+        error: 'Permission Denied: Only the Platform Owner can restore factory system instructions.'
+      };
+    }
+
+    this.state.systemPrompts = JSON.parse(JSON.stringify(DEFAULT_PROMPTS));
+    const entry = this.logger.record(
+      'SYSTEM_PROMPT_RESET',
+      'all_prompts',
+      userName,
+      'Owner',
+      'Restored factory baseline model instructions for all models.'
+    );
+    this.state.auditLog.unshift(entry);
+    this.save();
+    return { success: true };
+  }
+
+  getSystemPrompts(): ModelPromptConfig[] {
+    return this.state.systemPrompts || DEFAULT_PROMPTS;
+  }
+
+  getAuditLogs(): AuditLogEntry[] {
+    return this.state.auditLog;
   }
 }
 

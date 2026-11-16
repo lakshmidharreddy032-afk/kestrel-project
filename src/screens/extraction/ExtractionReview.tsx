@@ -445,9 +445,14 @@ export const ExtractionReview: React.FC<ExtractionReviewProps> = ({
 
               {/* System Instructions */}
               <div>
-                <span style={{ color: 'var(--mute)', fontSize: '11px' }}>SYSTEM INSTRUCTION (Deterministic OCR Extraction Only):</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: 'var(--mute)', fontSize: '11px' }}>SYSTEM INSTRUCTION (Deterministic OCR Extraction Only):</span>
+                  <span style={{ fontSize: '10.5px', color: currentRole === 'Owner' ? '#ea580c' : 'var(--mute)', fontWeight: 600 }}>
+                    {currentRole === 'Owner' ? '⚡ Managed via Prompt Studio (Owner Authority)' : '🔒 Managed by Platform Owner'}
+                  </span>
+                </div>
                 <div style={{ background: '#0f172a', color: '#e2e8f0', padding: '10px 12px', borderRadius: '6px', marginTop: '4px', lineHeight: 1.4, fontSize: '11px' }}>
-                  "You are a deterministic financial document OCR extractor for Indian SME loan underwriting. Extract financial totals (Bank Credits, Debits, AMB, GST Turnover) with normalized 0-100 bounding boxes. Output strictly adhering to the JSON schema. Do not make credit decisions, do not score risk, and do not decide approvals."
+                  "{store.getState().systemPrompts?.find(p => p.id === 'ocr_extraction')?.prompt || 'You are a deterministic financial document OCR extractor for Indian SME loan underwriting. Extract financial totals (Bank Credits, Debits, AMB, GST Turnover) with normalized 0-100 bounding boxes. Output strictly adhering to the JSON schema. Do not make credit decisions, do not score risk, and do not decide approvals.'}"
                 </div>
               </div>
 

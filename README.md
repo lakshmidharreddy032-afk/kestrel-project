@@ -97,8 +97,8 @@ The platform enforces strict separation of duties under RBI NBFC governance guid
 | **Relationship Manager (RM)** | Vikram Rao | `vikram.rao@kestrelfinance.in`<br>`Password@123` | • S1 Document Intake & Checklist Review<br>• Upload Bank Statements, GST, KYC & PAN<br>• Dispatch single-chase deficiency notices<br>• Track file turnaround times against SLA | ❌ Cannot verify or modify OCR financial figures<br>❌ Cannot commit/sync to spreading model<br>❌ Cannot approve, reject, or sanction loans<br>❌ Cannot view LLM token budgets or cost telemetry |
 | **Credit Analyst** | Meena Pillai | `meena.pillai@kestrelfinance.in`<br>`Password@123` | • S3 Diagnostic Checks (gaps & duplicate hashes)<br>• S4 OCR bounding box review & verification<br>• Override smudged figures with reason ($\ge 5$ chars)<br>• Unlock & sync 100% verified metrics to spreading<br>• Inspect 5-C SME Credit Scorecard | ❌ Cannot sign off loan sanction decisions<br>❌ Cannot dispatch borrower deficiency notices<br>❌ Cannot bypass 100% figure verification gate |
 | **Credit Officer** | Arjun Iyer | `arjun.iyer@kestrelfinance.in`<br>`Password@123` | • Review Executive Credit Appraisal Memo (CAM)<br>• Exercise delegated lending authority (&lt; ₹25L)<br>• Sanction facility, refer to committee, or reject<br>• Mandatory written rationale ($\ge 10$ characters)<br>• Issue legally-binding Sanction Letters | ❌ Hard-blocked if loan $\ge$ ₹25 Lakh (Ceiling Rule)<br>❌ Hard-blocked if figures are unverified<br>❌ System never auto-approves: requires human sign-off |
-| **Platform / AI Owner** | Devina Sen | `devina.sen@kestrelfinance.in`<br>`Password@123` | • Complete LLM observability across all models<br>• Token telemetry (prompt, completion, cached)<br>• Live per-call cost accounting (₹ INR and $ USD)<br>• Tenancy audit (GCP asia-south1, Zero Retention)<br>• Trigger live test calls & export telemetry | ❌ Cannot execute credit sanction decisions (reserved for human Credit Officer Arjun Iyer) |
-| **Regulatory Auditor** | Pooja Deshmukh | `compliance.audit@kestrelfinance.in`<br>`Password@123` | • Read-only inspection of immutable audit log<br>• Verify tamper-evident cryptographic event chain<br>• Monitor Gross NPA (&lt; 3.5%) & TAT benchmarks<br>• Export audit logs and memos for RBI inspection | ❌ Read-only access: Cannot modify figures, dispatch notices, or sign loan decisions |
+| **Platform / AI Owner** | Devina Sen | `devina.sen@kestrelfinance.in`<br>`Password@123` | • **Exclusive Authority:** Edit, customize, test, and deploy Model System Prompts<br>• Complete LLM observability across all models<br>• Token telemetry (prompt, completion, cached)<br>• Live per-call cost accounting (₹ INR and $ USD)<br>• Tenancy audit (GCP asia-south1, Zero Retention)<br>• Trigger live test calls & export telemetry | ❌ Cannot execute credit sanction decisions (reserved for human Credit Officer Arjun Iyer) |
+| **Regulatory Auditor** | Pooja Deshmukh | `compliance.audit@kestrelfinance.in`<br>`Password@123` | • Read-only inspection of immutable audit log<br>• Verify tamper-evident cryptographic event chain<br>• Monitor Gross NPA (&lt; 3.5%) & TAT benchmarks<br>• Export audit logs and memos for RBI inspection | ❌ Read-only access: Cannot modify figures, dispatch notices, or sign loan decisions<br>❌ Cannot change model system prompts |
 
 ---
 
@@ -131,6 +131,14 @@ The **Owner** role (`Devina Sen - Platform & AI Operations Owner`) provides end-
    - Live searchable trace explorer logging every model call with Call ID, borrower, document, operational milestone, prompt/completion tokens, latency, and exact calculated cost.
    - Interactive Trace Modal displaying the exact HTTP endpoint, system instructions, raw JSON response with 2D bounding boxes, and tenant data privacy verification (`GCP asia-south1`, Zero Data Retention).
    - Live interactive simulation button allowing the Owner to execute a live test call and watch telemetry update in real-time.
+
+4. **Exclusive System Prompt Studio (Owner Authority Only)**:
+   - **Exclusive Write Access**: Only the **Platform Owner (Devina Sen)** holds delegated IAM authority to customize, calibrate, and deploy model system instructions across production.
+   - **Multi-Model Customization**: Configures prompts across Gemini 1.5 Flash (OCR Vision), Gemini 1.5 Pro (Reconciliation), and Gemini 2.0 Flash (Intake).
+   - **Temperature & Parameter Calibration**: Interactive slider (0.00 deterministic to 1.00 exploratory) and token estimator.
+   - **Live Dry-Run Sandbox**: Real-time evaluation sandbox testing prompt variants, verifying schema conformity, and reporting estimated token usage before deployment.
+   - **Version Control & Audit Logging**: Every prompt update automatically increments version (e.g. `v2.4-prod` → `v2.5-custom`), updates live pipeline execution, and records a tamper-evident audit event (`SYSTEM_PROMPT_UPDATED`) to the immutable compliance ledger.
+   - **Read-Only Enforced for Non-Owners**: If an RM, Analyst, Credit Officer, or Auditor navigates to Prompt Studio, an enforced guardrail banner (`🔒 Access Restricted`) locks all inputs and disables deployment.
 
 ---
 

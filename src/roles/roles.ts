@@ -14,6 +14,7 @@ export interface RoleConfig {
     canSyncSpreading: boolean;
     canSignOffCredit: boolean;
     canViewObservability: boolean;
+    canChangePrompts: boolean;
   };
 }
 
@@ -31,7 +32,8 @@ export const ROLES: Record<UserRole, RoleConfig> = {
       canOverrideFigures: false,
       canSyncSpreading: false,
       canSignOffCredit: false,
-      canViewObservability: false
+      canViewObservability: false,
+      canChangePrompts: false
     }
   },
   'Analyst': {
@@ -47,7 +49,8 @@ export const ROLES: Record<UserRole, RoleConfig> = {
       canOverrideFigures: true,
       canSyncSpreading: true,
       canSignOffCredit: false,
-      canViewObservability: false
+      canViewObservability: false,
+      canChangePrompts: false
     }
   },
   'Credit Officer': {
@@ -63,7 +66,8 @@ export const ROLES: Record<UserRole, RoleConfig> = {
       canOverrideFigures: false,
       canSyncSpreading: false,
       canSignOffCredit: true,
-      canViewObservability: false
+      canViewObservability: false,
+      canChangePrompts: false
     }
   },
   'Owner': {
@@ -79,7 +83,8 @@ export const ROLES: Record<UserRole, RoleConfig> = {
       canOverrideFigures: true,
       canSyncSpreading: true,
       canSignOffCredit: false,
-      canViewObservability: true
+      canViewObservability: true,
+      canChangePrompts: true
     }
   },
   'Auditor': {
@@ -95,7 +100,8 @@ export const ROLES: Record<UserRole, RoleConfig> = {
       canOverrideFigures: false,
       canSyncSpreading: false,
       canSignOffCredit: false,
-      canViewObservability: false
+      canViewObservability: false,
+      canChangePrompts: false
     }
   }
 };

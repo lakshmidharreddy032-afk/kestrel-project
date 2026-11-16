@@ -212,7 +212,10 @@ const AppContent: React.FC = () => {
       )}
 
       {state.currentScreen === 'observability' && (
-        <LLMObservability />
+        <LLMObservability
+          currentRole={state.currentRole}
+          currentUserName={authSession.currentUser?.name || ROLES[state.currentRole].name}
+        />
       )}
     </AppShell>
   );
