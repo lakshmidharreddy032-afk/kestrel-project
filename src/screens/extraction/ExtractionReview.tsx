@@ -416,7 +416,23 @@ export const ExtractionReview: React.FC<ExtractionReviewProps> = ({
               {/* Synthetic Data Guarantee */}
               <div style={{ background: '#ecfdf5', border: '1px solid #10b981', borderRadius: '8px', padding: '10px 14px', color: '#065f46', fontFamily: 'sans-serif' }}>
                 <strong style={{ display: 'block', marginBottom: '2px', fontSize: '12.5px' }}>🔒 100% Synthetic SME Dataset (Zero Real PII)</strong>
-                All borrower names (e.g. <em>Malabar Spices & Agro LLP</em>), PANs (<code>36AAACM8492Q1ZT</code>), and bank ledger lines are purely synthetic and programmatically generated to meet RBI regulatory guidelines without exposing customer PII.
+                All borrower entities (e.g. <em>Malabar Spices & Agro LLP</em>, <em>Sri Balaji Enterprises</em>), PANs (<code>36AAACM8492Q1ZT</code>), GSTINs, and bank ledger lines are purely synthetic and programmatically generated following RBI lending guidelines without any customer PII.
+              </div>
+
+              {/* Tenancy & Location Claim Verification */}
+              <div style={{ background: '#f0f9ff', border: '1px solid #0284c7', borderRadius: '8px', padding: '12px 14px', color: '#0369a1', fontFamily: 'sans-serif' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                  <strong style={{ fontSize: '12.5px' }}>📍 Model Execution & Tenancy Claim Verification</strong>
+                  <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', background: '#0284c7', color: '#fff' }}>
+                    GCP asia-south1 (Mumbai)
+                  </span>
+                </div>
+                <div style={{ fontSize: '11.5px', lineHeight: 1.5, color: '#0c4a6e' }}>
+                  <div>• <strong>Hosting Platform:</strong> Google Cloud Platform (GCP) Cloud Run — Service <code>kestrel-finance</code></div>
+                  <div>• <strong>Region & Data Residency:</strong> <code>asia-south1</code> (Mumbai, India) strictly complying with RBI data localization.</div>
+                  <div>• <strong>Zero Data Retention (ZDR):</strong> Google Cloud Enterprise SLA processes document payloads ephemerally in-memory (RAM only). Scan images and extracted data are <strong>never written to disk</strong>, <strong>never cached</strong>, and <strong>never used for foundation model training</strong>.</div>
+                  <div>• <strong>Tenancy Isolation:</strong> Single-tenant VPC perimeter with TLS 1.3 in transit and AES-256 Customer-Managed Keys (CMEK) at rest.</div>
+                </div>
               </div>
 
               {/* Endpoint Specs */}

@@ -9,6 +9,7 @@ import { SpreadingSheet } from './screens/sheet/SpreadingSheet';
 import { CreditSignOff } from './screens/signOff/CreditSignOff';
 import { AuditLogTable } from './screens/auditLog/AuditLogTable';
 import { MetricsDashboard } from './screens/dashboard/MetricsDashboard';
+import { LLMObservability } from './screens/observability/LLMObservability';
 import { ROLES } from './roles/roles';
 import { SCREENS } from './components/layout/Sidebar';
 import { ToastProvider, useToast } from './components/ui/Toast';
@@ -25,13 +26,15 @@ const AppContent: React.FC = () => {
     return unsubscribe;
   }, []);
 
-  // Keyboard navigation shortcuts [1-9]
+  // Keyboard navigation shortcuts [1-9, 0]
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
       if (e.key >= '1' && e.key <= '9') {
         const idx = parseInt(e.key, 10) - 1;
         if (SCREENS[idx]) store.setScreen(SCREENS[idx].id);
+      } else if (e.key === '0') {
+        store.setScreen('observability');
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -53,7 +56,12 @@ const AppContent: React.FC = () => {
       currentRole={state.currentRole}
       onRoleChange={role => {
         store.setRole(role);
-        showToast('info', 'Active Persona Switched', `Now operating as ${role}`);
+        if (role === 'Owner') {
+          store.setScreen('observability');
+          showToast('info', 'Platform Owner Mode Active', 'Switched to LLM Observability & Model Cost Accounting.');
+        } else {
+          showToast('info', 'Active Persona Switched', `Now operating as ${role}`);
+        }
       }}
       currentScreen={state.currentScreen}
       onScreenChange={screen => store.setScreen(screen)}
@@ -164,6 +172,10 @@ const AppContent: React.FC = () => {
             showToast('info', 'Demo Data Reset', 'Restored initial mock seed data.');
           }}
         />
+      )}
+
+      {state.currentScreen === 'observability' && (
+        <LLMObservability />
       )}
     </AppShell>
   );

@@ -13,6 +13,7 @@ export interface RoleConfig {
     canOverrideFigures: boolean;
     canSyncSpreading: boolean;
     canSignOffCredit: boolean;
+    canViewObservability: boolean;
   };
 }
 
@@ -29,7 +30,8 @@ export const ROLES: Record<UserRole, RoleConfig> = {
       canConfirmFigures: false,
       canOverrideFigures: false,
       canSyncSpreading: false,
-      canSignOffCredit: false
+      canSignOffCredit: false,
+      canViewObservability: false
     }
   },
   'Analyst': {
@@ -44,7 +46,8 @@ export const ROLES: Record<UserRole, RoleConfig> = {
       canConfirmFigures: true,
       canOverrideFigures: true,
       canSyncSpreading: true,
-      canSignOffCredit: false
+      canSignOffCredit: false,
+      canViewObservability: false
     }
   },
   'Credit Officer': {
@@ -59,7 +62,24 @@ export const ROLES: Record<UserRole, RoleConfig> = {
       canConfirmFigures: false,
       canOverrideFigures: false,
       canSyncSpreading: false,
-      canSignOffCredit: true
+      canSignOffCredit: true,
+      canViewObservability: false
+    }
+  },
+  'Owner': {
+    id: 'Owner',
+    name: 'Devina Sen',
+    initials: 'DS',
+    avatarClass: 'avatar-owner',
+    title: 'Platform & AI Operations Owner (Fictional)',
+    description: 'LLM Observability, Model Cost Accounting, Token Telemetry & Architecture Governance',
+    permissions: {
+      canSendRequests: true,
+      canConfirmFigures: true,
+      canOverrideFigures: true,
+      canSyncSpreading: true,
+      canSignOffCredit: false,
+      canViewObservability: true
     }
   }
 };

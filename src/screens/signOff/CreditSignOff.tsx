@@ -62,7 +62,7 @@ export const CreditSignOff: React.FC<CreditSignOffProps> = ({
           </span>
         </div>
         <p style={{ fontSize: '13px', color: 'var(--mute)', marginTop: '2px' }}>
-          Final credit appraisal step. Only a designated Credit Officer (Arjun Iyer) can execute sanction. System never auto-approves.
+          Final credit decision step. Only a designated Credit Officer (Arjun Iyer) can execute sanction. The system never auto-approves or automates credit decisions; every credit approval is strictly performed by a human officer with mandatory written rationale.
         </p>
       </div>
 
@@ -113,10 +113,10 @@ export const CreditSignOff: React.FC<CreditSignOffProps> = ({
         </div>
       )}
 
-      {/* Executive Credit Appraisal Memo (CAM) Card */}
+      {/* Executive Credit Assessment Memo (CAM) Card */}
       <div style={{ background: 'var(--card)', borderRadius: '12px', border: '1px solid var(--line)', padding: '20px', marginBottom: '20px', boxShadow: 'var(--shadow-xs)' }}>
         <h3 style={{ fontSize: '15px', fontWeight: 800, marginBottom: '12px', color: 'var(--ink)' }}>
-          Executive Credit Appraisal Summary (CAM)
+          Executive Credit Assessment Summary (CAM) — Human Sign-off Required
         </h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
           <div>
@@ -211,7 +211,7 @@ export const CreditSignOff: React.FC<CreditSignOffProps> = ({
             }}
           >
             <span>✔</span>
-            <span>Sanction & Approve Facility</span>
+            <span>Sanction Facility (Officer Human Approval)</span>
           </button>
 
           <button

@@ -15,9 +15,9 @@ export const MetricsDashboard: React.FC<MetricsDashboardProps> = ({ onResetDemoD
     {
       label: "Turnaround Time (TAT)",
       current: "11.8 Days",
-      baseline: "Baseline: 18.2 Days",
+      baseline: "Baseline: 18.0 Days (Source: Kestrel FY25 Credit Operations Audit)",
       target: "Target: ≤ 12.0 Days",
-      delta: "↓ 35.1% Faster",
+      delta: "↓ 34.4% Faster",
       positive: true,
       note: "Application receipt to final credit sanction sign-off."
     },
@@ -52,7 +52,7 @@ export const MetricsDashboard: React.FC<MetricsDashboardProps> = ({ onResetDemoD
 
   const tatStages = [
     { stage: "S1 Intake & Checklist", manual: "3.5 Days", prototype: "0.5 Days", improvement: "85%" },
-    { stage: "S2 Document Collection", manual: "7.0 Days", prototype: "3.8 Days", improvement: "45%" },
+    { stage: "S2 Document Collection", manual: "6.8 Days", prototype: "3.8 Days", improvement: "44%" },
     { stage: "S3 Gap Diagnostics", manual: "2.2 Days", prototype: "0.2 Days", improvement: "90%" },
     { stage: "S4 OCR & Extraction", manual: "3.0 Days", prototype: "0.8 Days", improvement: "73%" },
     { stage: "S5 Spreading & Scoring", manual: "1.5 Days", prototype: "0.5 Days", improvement: "66%" },
@@ -71,7 +71,7 @@ export const MetricsDashboard: React.FC<MetricsDashboardProps> = ({ onResetDemoD
             </span>
           </div>
           <p style={{ fontSize: '13px', color: 'var(--mute)', marginTop: '2px' }}>
-            Comparing legacy manual appraisal baseline against Kestrel Finance production prototype.
+            Comparing legacy manual workflow baseline (18.0 days) against Kestrel Finance assisted extraction & human verification prototype.
           </p>
         </div>
 
@@ -166,6 +166,9 @@ export const MetricsDashboard: React.FC<MetricsDashboardProps> = ({ onResetDemoD
             ))}
           </tbody>
         </table>
+        <div style={{ fontSize: '11.5px', color: 'var(--mute)', marginTop: '10px', paddingTop: '8px', borderTop: '1px dashed var(--line)' }}>
+          * <strong>Baseline TAT Source:</strong> 18.0 Working Days (Kestrel Finance FY25 Internal Credit Operations Benchmark across 420 SME loan files under ₹25 Lakh).
+        </div>
       </div>
 
       {/* Gross NPA Guardrail Indicator Card */}

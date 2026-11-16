@@ -95,7 +95,7 @@ export const ApplicationsList: React.FC<ApplicationsListProps> = ({
           <div style={{ fontSize: '26px', fontWeight: 800, color: 'var(--ok-ink)', fontFamily: 'var(--mono)', marginTop: '4px' }}>
             {eligibleCount} <span style={{ fontSize: '13px', fontWeight: 500 }}>in policy</span>
           </div>
-          <div style={{ fontSize: '11px', color: 'var(--ok-ink)', marginTop: '4px' }}>Fast-track automated appraisal</div>
+          <div style={{ fontSize: '11px', color: 'var(--ok-ink)', marginTop: '4px' }}>Assisted Extraction • Human Credit Sign-off</div>
         </div>
 
         <div style={{ background: 'var(--card)', borderRadius: '12px', border: '1px solid var(--line)', padding: '16px' }} className="interactive-card">
@@ -109,9 +109,9 @@ export const ApplicationsList: React.FC<ApplicationsListProps> = ({
         <div style={{ background: 'var(--card)', borderRadius: '12px', border: '1px solid var(--line)', padding: '16px' }} className="interactive-card">
           <div style={{ fontSize: '12px', color: 'var(--blue)', fontWeight: 600 }}>Target Turnaround Time</div>
           <div style={{ fontSize: '26px', fontWeight: 800, color: 'var(--blue)', fontFamily: 'var(--mono)', marginTop: '4px' }}>
-            11.8d <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--mute)' }}>vs 18.2d</span>
+            11.8d <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--mute)' }}>vs 18d</span>
           </div>
-          <div style={{ fontSize: '11px', color: 'var(--ok-ink)', marginTop: '4px' }}>↓ 35% TAT reduction vs manual</div>
+          <div style={{ fontSize: '11px', color: 'var(--ok-ink)', marginTop: '4px' }}>↓ 34.4% TAT reduction vs 18d manual baseline (Kestrel FY25 Audit)</div>
         </div>
       </div>
 
@@ -120,7 +120,7 @@ export const ApplicationsList: React.FC<ApplicationsListProps> = ({
         <div>
           <h2 style={{ fontSize: '20px', fontWeight: 800 }}>Applications Queue & Pipeline</h2>
           <p style={{ fontSize: '13px', color: 'var(--mute)' }}>
-            Simple SME loan applications (&lt; ₹25 Lakh). Select any file to launch the S1/S3/S4 appraisal workflow.
+            Simple SME loan applications (&lt; ₹25 Lakh). Select any file to launch the S1/S3/S4 extraction and human verification workflow.
           </p>
         </div>
 
@@ -238,12 +238,15 @@ export const ApplicationsList: React.FC<ApplicationsListProps> = ({
                   </td>
                   <td style={{ padding: '12px 16px', color: 'var(--mute)' }}>{app.assignedRM}</td>
                   <td style={{ padding: '12px 16px' }}>
-                    <span style={{
-                      padding: '3px 8px', borderRadius: '9999px', fontSize: '11.5px', fontWeight: 700,
-                      background: app.isOutOfScope ? 'var(--error-bg)' : app.status === 'Approved' ? 'var(--ok-bg)' : 'var(--blue-bg)',
-                      color: app.isOutOfScope ? 'var(--error-ink)' : app.status === 'Approved' ? 'var(--ok-ink)' : 'var(--blue)'
-                    }}>
-                      {app.status}
+                    <span
+                      style={{
+                        padding: '3px 8px', borderRadius: '9999px', fontSize: '11.5px', fontWeight: 700,
+                        background: app.isOutOfScope ? 'var(--error-bg)' : app.status === 'Approved' ? 'var(--ok-bg)' : 'var(--blue-bg)',
+                        color: app.isOutOfScope ? 'var(--error-ink)' : app.status === 'Approved' ? 'var(--ok-ink)' : 'var(--blue)'
+                      }}
+                      title={app.status === 'Approved' ? 'Approved by Credit Officer (Arjun Iyer). The system never auto-approves.' : undefined}
+                    >
+                      {app.status === 'Approved' ? 'Officer Approved (Manual Sign-off)' : app.status}
                     </span>
                   </td>
                   <td style={{ padding: '12px 16px' }}>

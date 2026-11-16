@@ -63,21 +63,21 @@
     <rect x="294" y="0" width="270" height="84" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
     <text x="310" y="24" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#0e6245">Eligible (&lt; ₹25L Ceiling)</text>
     <text x="310" y="56" font-family="JetBrains Mono, monospace" font-size="24" font-weight="800" fill="#0e6245">10 <tspan font-size="13" font-weight="500">in policy</tspan></text>
-    <text x="310" y="74" font-family="Inter, sans-serif" font-size="10.5" fill="#0e6245">Fast-track automated appraisal</text>
+    <text x="310" y="74" font-family="Inter, sans-serif" font-size="10.5" fill="#0e6245">Assisted extraction • Human sign-off</text>
 
     <rect x="588" y="0" width="270" height="84" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
     <text x="604" y="24" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#a52336">Out of Scope (≥ ₹25L)</text>
-    <text x="604" y="56" font-family="JetBrains Mono, monospace" font-size="24" font-weight="800" fill="#a52336">2 <tspan font-size="13" font-weight="500">blocked</tspan></text>
+    <text x="604" y="56" font-family="JetBrains Mono, monospace" font-size="24" font-weight="800" fill="#a52336">2 <tspan font-size="12" font-weight="500">blocked</tspan></text>
     <text x="604" y="74" font-family="Inter, sans-serif" font-size="10.5" fill="#a52336">Strict governance guardrail #1</text>
 
     <rect x="882" y="0" width="270" height="84" rx="10" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
     <text x="898" y="24" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1e56a0">Target Turnaround Time</text>
-    <text x="898" y="56" font-family="JetBrains Mono, monospace" font-size="24" font-weight="800" fill="#1e56a0">11.8d <tspan font-size="13" font-weight="500" fill="#64748b">vs 18.2d</tspan></text>
-    <text x="898" y="74" font-family="Inter, sans-serif" font-size="10.5" fill="#0e6245">↓ 35% TAT reduction vs manual</text>
+    <text x="898" y="56" font-family="JetBrains Mono, monospace" font-size="24" font-weight="800" fill="#1e56a0">11.8d <tspan font-size="13" font-weight="500" fill="#64748b">vs 18d</tspan></text>
+    <text x="898" y="74" font-family="Inter, sans-serif" font-size="10.5" fill="#0e6245">↓ 34.4% TAT reduction vs 18d baseline</text>
 
     <!-- Controls Bar -->
     <text x="0" y="118" font-family="Inter, sans-serif" font-size="18" font-weight="800" fill="#0f172a">Applications Queue &amp; Pipeline</text>
-    <text x="0" y="136" font-family="Inter, sans-serif" font-size="12" fill="#64748b">Simple SME loan applications (&lt; ₹25 Lakh). Select any file to launch the S1/S3/S4 appraisal workflow.</text>
+    <text x="0" y="136" font-family="Inter, sans-serif" font-size="12" fill="#64748b">Simple SME loan applications (&lt; ₹25 Lakh). Select any file to launch the S1/S3/S4 extraction and verification workflow.</text>
 
     <rect x="760" y="104" width="200" height="32" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
     <text x="772" y="125" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8">🔍 Search by ID, applicant...</text>

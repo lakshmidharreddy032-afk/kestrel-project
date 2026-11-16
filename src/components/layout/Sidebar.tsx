@@ -16,7 +16,8 @@ export const SCREENS: NavScreenItem[] = [
   { id: 'sheet', name: 'Spreading Sheet & Scorecard', shortcut: '6', icon: '📊' },
   { id: 'signOff', name: 'Credit Officer Sign-off', shortcut: '7', icon: '⚖️' },
   { id: 'auditLog', name: 'Immutable Audit Log', shortcut: '8', icon: '📜' },
-  { id: 'dashboard', name: 'Metrics & NPA Guardrail', shortcut: '9', icon: '📈' }
+  { id: 'dashboard', name: 'Metrics & NPA Guardrail', shortcut: '9', icon: '📈' },
+  { id: 'observability', name: 'LLM Observability & Cost', shortcut: '0', icon: '⚡' }
 ];
 
 interface SidebarProps {

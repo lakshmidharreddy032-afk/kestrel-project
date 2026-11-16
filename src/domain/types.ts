@@ -1,4 +1,50 @@
-export type UserRole = 'Relationship Manager' | 'Analyst' | 'Credit Officer';
+export type UserRole = 'Relationship Manager' | 'Analyst' | 'Credit Officer' | 'Owner';
+
+export interface LLMCallTrace {
+  id: string;
+  timestamp: string;
+  appId: string;
+  applicant: string;
+  document: string;
+  stage: string;
+  model: string;
+  endpoint: string;
+  promptTokens: number;
+  completionTokens: number;
+  cachedTokens: number;
+  totalTokens: number;
+  costUSD: number;
+  costINR: number;
+  latencyMs: number;
+  statusCode: number;
+  status: string;
+  confidence: number;
+  tenancy: string;
+  extractedFields: number;
+  systemPrompt: string;
+  rawResponse: string;
+}
+
+export interface LLMModelCatalogItem {
+  modelId: string;
+  name: string;
+  version: string;
+  provider: string;
+  region: string;
+  primaryUse: string;
+  pricing: {
+    inputPer1MTokensUSD: number;
+    cachedInputPer1MTokensUSD: number;
+    outputPer1MTokensUSD: number;
+  };
+  stats: {
+    callsCount: number;
+    totalTokens: number;
+    totalCostUSD: number;
+    avgLatencyMs: number;
+    successRate: number;
+  };
+}
 
 export interface SMEApplication {
   id: string;

@@ -33,6 +33,45 @@ export const AppShell: React.FC<AppShellProps> = ({
 
   return (
     <div className="app-shell" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Top Compliance & Tenancy Banner */}
+      <div style={{
+        background: 'var(--card-subtle)',
+        borderBottom: '1px solid var(--line)',
+        padding: '6px 24px',
+        fontSize: '11.5px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '8px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{
+            background: 'var(--ok-bg)',
+            color: 'var(--ok-ink)',
+            border: '1px solid var(--ok-border)',
+            padding: '1px 7px',
+            borderRadius: '4px',
+            fontWeight: 700,
+            fontSize: '10.5px'
+          }}>
+            100% SYNTHETIC DATA
+          </span>
+          <span style={{ color: 'var(--ink)' }}>
+            Strictly synthetic mock data (zero real customer PII; simulated PANs, GSTINs, and bank ledgers per RBI directions).
+          </span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', color: 'var(--mute)', fontSize: '11px' }}>
+          <span>📍 Model Host: <strong>GCP asia-south1 (Mumbai)</strong></span>
+          <span>🔒 Tenancy: <strong>Single-Tenant Boundary • Zero Data Retention</strong></span>
+          {currentRole === 'Owner' ? (
+            <span style={{ color: '#ea580c', fontWeight: 700 }}>⚡ Owner Console Active (LLM Observability &amp; Costs)</span>
+          ) : (
+            <span>👤 Governance: <strong>Human Officer Sign-Off Required</strong></span>
+          )}
+        </div>
+      </div>
+
       {/* Top Header */}
       <header style={{
         background: 'var(--card)', borderBottom: '1px solid var(--line)', padding: '12px 24px', position: 'sticky', top: 0, zIndex: 100
@@ -150,7 +189,7 @@ export const AppShell: React.FC<AppShellProps> = ({
                 background: activeApp.isOutOfScope ? 'var(--error-bg)' : activeApp.status === 'Approved' ? 'var(--ok-bg)' : 'var(--blue-bg)',
                 color: activeApp.isOutOfScope ? 'var(--error-ink)' : activeApp.status === 'Approved' ? 'var(--ok-ink)' : 'var(--blue)'
               }}>
-                {activeApp.isOutOfScope ? '✕ Out of Scope (≥₹25L)' : activeApp.status}
+                {activeApp.isOutOfScope ? '✕ Out of Scope (≥₹25L)' : activeApp.status === 'Approved' ? 'Officer Approved (Manual Sign-off)' : activeApp.status}
               </span>
             </div>
           </div>
@@ -165,8 +204,8 @@ export const AppShell: React.FC<AppShellProps> = ({
       {/* Footer */}
       <footer style={{ background: 'var(--card)', borderTop: '1px solid var(--line)', padding: '16px 24px', fontSize: '12px', color: 'var(--mute)' }}>
         <div style={{ maxWidth: '1440px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-          <div>Kestrel Finance • Simulated Azure India Tenancy • Fictional SME Loan Prototype</div>
-          <div>Hard Governance: Model reads documents only; a person checks every figure & signs every credit decision.</div>
+          <div><strong>Kestrel Finance</strong> • GCP asia-south1 (Mumbai) Single-Tenant Boundary • Zero Data Retention • 100% Synthetic Data (Zero PII)</div>
+          <div>Hard Governance: Model assists extraction only; a human analyst checks every figure & a human Credit Officer signs every credit sanction.</div>
         </div>
       </footer>
     </div>
